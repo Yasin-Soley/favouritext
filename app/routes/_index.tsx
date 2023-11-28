@@ -1,25 +1,25 @@
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import MainNavigation from '~/components/MainNavigation'
 import { getUserFromSession } from '~/data/auth.server'
 
 export const meta: MetaFunction = () => {
 	return [
-		{ title: 'New Remix App' },
+		{ title: 'Write For Life' },
 		{ name: 'description', content: 'Welcome to Remix!' },
 	]
 }
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
+export const loader = async ({
+	request,
+}: LoaderFunctionArgs): Promise<String | null> => {
 	return getUserFromSession(request)
 }
 
 export default function Index() {
-	const userId: string | null = useLoaderData()
+	const userId = useLoaderData<typeof loader>()
 
 	return (
 		<div>
-			<MainNavigation />
 			<h1>hello {userId || 'friend'}!</h1>
 		</div>
 	)

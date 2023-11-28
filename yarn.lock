@@ -492,6 +492,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@coreui/icons-react@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "@coreui/icons-react@npm:2.2.1"
+  peerDependencies:
+    react: ">=17"
+    react-dom: ">=17"
+  checksum: 98799957a00fa0c70209f18598589839e4bc21576d3ba18cd7d6e64e15727427e6c977d5880ac8fde06552db50452fee7e703340bd00c2ce2d88475b5dd82ee3
+  languageName: node
+  linkType: hard
+
+"@coreui/icons@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@coreui/icons@npm:3.0.1"
+  checksum: 0459828569dfee56c5002640987bedb9e8f5a25a89596de47de5a9dda0be965a33e57a1e8f48e40e883b65bc3ff2311ea0b0c22cbb4fa672896b6db04c543355
+  languageName: node
+  linkType: hard
+
 "@emotion/hash@npm:^0.9.0":
   version: 0.9.1
   resolution: "@emotion/hash@npm:0.9.1"
@@ -853,6 +870,15 @@ __metadata:
   version: 2.1.0
   resolution: "@fastify/busboy@npm:2.1.0"
   checksum: 3233abd10f73e50668cb4bb278a79b7b3fadd30215ac6458299b0e5a09a29c3586ec07597aae6bd93f5cbedfcef43a8aeea51829cd28fc13850cdbcd324c28d5
+  languageName: node
+  linkType: hard
+
+"@heroicons/react@npm:^2.0.18":
+  version: 2.0.18
+  resolution: "@heroicons/react@npm:2.0.18"
+  peerDependencies:
+    react: ">= 16"
+  checksum: 597e8668818623d568a302e343ef06b69f62ce297c14b88c2ebbfed0c0f00cd85ec44fae33ec8a249931b4e7dcf145743ae3198095a9f4682108de5155f5f4c3
   languageName: node
   linkType: hard
 
@@ -1889,6 +1915,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app@workspace:."
   dependencies:
+    "@coreui/icons": ^3.0.1
+    "@coreui/icons-react": ^2.2.1
+    "@heroicons/react": ^2.0.18
     "@prisma/client": ^5.6.0
     "@remix-run/css-bundle": ^2.3.1
     "@remix-run/dev": ^2.3.1
@@ -2331,9 +2360,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001541":
-  version: 1.0.30001564
-  resolution: "caniuse-lite@npm:1.0.30001564"
-  checksum: 5b53749a2e9057e74c5a129fc214fa4434d3f0c3faadbec176efa03b44e40f9c1ef8ceec979f0dd186f7a142476713129df9263e012a178351ba7807217f157a
+  version: 1.0.30001565
+  resolution: "caniuse-lite@npm:1.0.30001565"
+  checksum: 7621f358d0e1158557430a111ca5506008ae0b2c796039ef53aeebf4e2ba15e5241cb89def21ea3a633b6a609273085835b44a522165d871fa44067cdf29cccd
   languageName: node
   linkType: hard
 

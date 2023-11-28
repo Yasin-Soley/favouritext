@@ -1,4 +1,4 @@
-import { type LinksFunction } from '@remix-run/node'
+import { type LinksFunction, type LoaderFunctionArgs } from '@remix-run/node'
 import {
 	Links,
 	LiveReload,
@@ -11,10 +11,16 @@ import {
 } from '@remix-run/react'
 
 import stylesheet from '~/styles/style.css'
+import MainNavigation from './components/MainNavigation'
+import { getUserFromSession } from './data/auth.server'
 
 export const links: LinksFunction = () => [
 	{ rel: 'stylesheet', href: stylesheet },
 ]
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+	return getUserFromSession(request)
+}
 
 export default function App() {
 	return (
@@ -28,7 +34,15 @@ export default function App() {
 				<Meta />
 				<Links />
 			</head>
-			<body className="bg-slate-100">
+			<body
+				dir="rtl"
+				className="bg-primary text-secondary"
+				style={{ fontFamily: 'dirooz' }}
+			>
+				<header className="bg-secondary">
+					<MainNavigation />
+				</header>
+
 				<Outlet />
 				<ScrollRestoration />
 				<Scripts />
@@ -49,7 +63,13 @@ export function ErrorBoundary() {
 				<Meta />
 				<Links />
 			</head>
-			<body>
+			<body
+				className="bg-primary text-secondary"
+				style={{ fontFamily: 'dirooz' }}
+			>
+				<header className="bg-secondary">
+					<MainNavigation />
+				</header>
 				<h1>
 					{isRouteErrorResponse(error)
 						? error.data
