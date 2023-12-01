@@ -11,15 +11,18 @@ import {
 } from '@remix-run/react'
 
 import stylesheet from '~/styles/style.css'
-import MainNavigation from './components/MainNavigation'
+
 import { getUserFromSession } from './data/auth.server'
+import MainNavigation from './components/MainNavigation'
 
 export const links: LinksFunction = () => [
 	{ rel: 'stylesheet', href: stylesheet },
 ]
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-	return getUserFromSession(request)
+	const res = await getUserFromSession(request)
+	console.log('root.tsx: ', res)
+	return res
 }
 
 export default function App() {
@@ -39,10 +42,6 @@ export default function App() {
 				className="bg-primary text-secondary"
 				style={{ fontFamily: 'dirooz' }}
 			>
-				<header className="bg-secondary">
-					<MainNavigation />
-				</header>
-
 				<Outlet />
 				<ScrollRestoration />
 				<Scripts />

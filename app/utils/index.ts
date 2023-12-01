@@ -17,4 +17,6 @@ export class CustomError extends Error {
 export interface Credentials {
 	email: string
 	password: string
+	username?: string
+	repeatedPassword?: string
 }

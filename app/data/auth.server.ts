@@ -30,6 +30,7 @@ export async function createUserSession(userId: string, redirectPath: string) {
 	})
 }
 
+// ? this function acts an an guard; for pages that need user to be authenticated.
 export async function destroyUserSession(request: Request) {
 	const session = await sessionStorage.getSession(
 		request.headers.get('Cookie')
@@ -41,6 +42,11 @@ export async function destroyUserSession(request: Request) {
 		},
 	})
 }
+
+// ? but this one is just for getting user that we assume already is authenticated.
+// ? because user is in pages that supposed to be protected.
+// ? so has to be signed in, and therefor, there will be a userId.
+// ? ```if (!userId) return null```  is just a step added for sake of completeness.
 
 export async function requireUserSession(request: Request) {
 	const userId = await getUserFromSession(request)
@@ -65,6 +71,8 @@ export async function getUserFromSession(
 		return null
 	}
 
+	console.log('passed')
+
 	return userId
 }
 
@@ -76,7 +84,7 @@ export async function signup({ email, password }: Credentials) {
 	})
 
 	if (existingUser) {
-		throw new CustomError('user already exists with provided email!', 422)
+		throw new CustomError('کاربر با ایمیل وارد شده از قبل وجود دارد!', 422)
 	}
 
 	const { hash } = pkg
@@ -99,13 +107,9 @@ export async function login({ email, password }: Credentials) {
 			email,
 		},
 	})
-	console.log(existingUser)
 
 	if (!existingUser) {
-		throw new CustomError(
-			'could not log you in. please check provided credentials!',
-			401
-		)
+		throw new CustomError('ایمیل یا رمز عبور نادرست است.', 401)
 	}
 
 	const { compare } = pkg
@@ -113,13 +117,8 @@ export async function login({ email, password }: Credentials) {
 	const isPasswordCorrect = await compare(password, existingUser.password)
 
 	if (!isPasswordCorrect) {
-		throw new CustomError(
-			'could not log you in. please check provided credentials!',
-			401
-		)
+		throw new CustomError('ایمیل یا رمز عبور نادرست است.', 401)
 	}
 
 	return createUserSession(existingUser.id, '/dictionary')
 }
-
-// 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

@@ -12,7 +12,7 @@ export const meta: MetaFunction = () => {
 export const loader = async ({
 	request,
 }: LoaderFunctionArgs): Promise<String | null> => {
-	return getUserFromSession(request)
+	return await getUserFromSession(request)
 }
 
 export default function Index() {
