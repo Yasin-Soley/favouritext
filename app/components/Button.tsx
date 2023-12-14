@@ -19,7 +19,7 @@ export default function Button({
 	type,
 }: ButtonProps) {
 	className =
-		'w-20 py-2 text-sm inline-block text-center rounded-sm disabled:cursor-not-allowed disabled:bg-opacity-60 ' +
+		'w-24 py-2 text-sm inline-block text-center rounded-sm disabled:cursor-not-allowed disabled:bg-opacity-60 ' +
 		className
 
 	if (isButton)

@@ -6,6 +6,7 @@ import FormControl from './FormControl'
 
 const Auth = ({ mode }: { mode: string }) => {
 	const validationErrors = useActionData<typeof action>()
+
 	const navigation = useNavigation()
 
 	const isLoading = navigation.state !== 'idle'

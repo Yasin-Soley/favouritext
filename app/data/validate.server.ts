@@ -46,5 +46,10 @@ export function validateCredentials(input: Credentials) {
 
 	if (Object.keys(validationErrors).length > 0) {
 		throw validationErrors
-	}
+	} else
+		return {
+			email: input.email,
+			password: input.password,
+			username: input.username,
+		}
 }

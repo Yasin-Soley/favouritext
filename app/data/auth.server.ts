@@ -76,7 +76,7 @@ export async function getUserFromSession(
 	return userId
 }
 
-export async function signup({ email, password }: Credentials) {
+export async function signup({ email, password, username }: Credentials) {
 	const existingUser = await prisma.user.findFirst({
 		where: {
 			email,
@@ -95,6 +95,7 @@ export async function signup({ email, password }: Credentials) {
 		data: {
 			email,
 			password: passwordHash,
+			username: username!,
 		},
 	})
 

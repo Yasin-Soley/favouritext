@@ -20,3 +20,13 @@ export interface Credentials {
 	username?: string
 	repeatedPassword?: string
 }
+
+export const alphabets = (function () {
+	let alphabets: string[] = []
+
+	for (let i = 97; i <= 122; i++) {
+		alphabets.push(String.fromCharCode(i))
+	}
+
+	return alphabets
+})()
