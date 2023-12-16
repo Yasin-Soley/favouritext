@@ -1,5 +1,5 @@
 import { Form, Link, useRouteLoaderData } from '@remix-run/react'
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
+// import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 
 import Button from '../Button'
 import NavigateLink from './NavigateLink'
@@ -17,7 +17,7 @@ export default function MainNavigation() {
 					</Link>
 				</div>
 
-				<div className="hidden sm:block w-1/3">
+				{/* <div className="hidden sm:block w-1/3">
 					<Form className="flex h-full relative">
 						<input
 							type="text"
@@ -28,7 +28,7 @@ export default function MainNavigation() {
 							<MagnifyingGlassIcon className=" h-full" />
 						</button>
 					</Form>
-				</div>
+				</div> */}
 
 				<div className="mr-auto gap-x-2">
 					{userId ? (
@@ -58,7 +58,7 @@ export default function MainNavigation() {
 
 			{/* bottom-div */}
 			<div className="flex justify-center mt-6">
-				<ul className="flex text-main gap-x-10">
+				<ul className="flex text-main">
 					<li>
 						<NavigateLink to={`/poem`}>گنجینه اشعار</NavigateLink>
 					</li>
@@ -71,7 +71,7 @@ export default function MainNavigation() {
 
 					<li>
 						<Link
-							className="block px-2 py-3 transition hover:bg-main  hover:text-green_dark"
+							className="block px-4 py-3 transition hover:bg-main  hover:text-green_dark"
 							to={`#footer`}
 						>
 							ارتباط با سازنده

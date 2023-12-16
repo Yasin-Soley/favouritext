@@ -11,10 +11,10 @@ export default function NavigateLink({ to, children }: NavigateLinkProps) {
 		<NavLink
 			className={({ isActive, isPending }) =>
 				isPending
-					? 'block px-2 py-3 transition bg-main  text-green_dark animate-pulse'
+					? 'block px-4 py-3 transition bg-main  text-green_dark animate-pulse'
 					: isActive
-					? 'block px-2 py-3 transition bg-main  text-green_dark'
-					: 'block px-2 py-3 transition hover:bg-main  hover:text-green_dark'
+					? 'block px-4 py-3 transition bg-main  text-green_dark'
+					: 'block px-4 py-3 transition hover:bg-main  hover:text-green_dark'
 			}
 			to={to}
 		>

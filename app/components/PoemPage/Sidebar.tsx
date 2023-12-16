@@ -6,12 +6,12 @@ const SUBJECTS = ['عشق', 'نفرت', 'دوستی']
 export default function Sidebar() {
 	return (
 		<>
-			<h3 className="font-bold text-2xl text-center">بخوان مرا</h3>
-
-			<p className="text-center mt-5 mb-2">
-				کاربر عزیز، به صفحه شعر شخصی خوش آمدید!
-			</p>
-
+			<div className="h-1/6">
+				<h3 className="font-bold text-2xl text-center">بخوان مرا</h3>
+				<p className="text-center mt-5 ">
+					کاربر عزیز، به صفحه شعر شخصی خوش آمدید!
+				</p>
+			</div>
 			<div className="flex flex-col rounded-sm overflow-hidden">
 				<div className="bg-green_dark text-primary px-5 py-4 flex justify-between">
 					<h4 className="text-lg">فیلتر ها</h4>
