@@ -44,7 +44,9 @@ export default function App() {
 			>
 				<Outlet />
 
-				<footer id="footer">footer</footer>
+				<footer className="h-20" id="footer">
+					footer
+				</footer>
 
 				<ScrollRestoration />
 				<Scripts />

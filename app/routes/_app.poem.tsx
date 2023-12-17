@@ -1,24 +1,9 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { Form } from '@remix-run/react'
-import type { FormEvent } from 'react'
-import PoemBox from '~/components/PoemPage/PoemBox'
-import Sidebar from '~/components/PoemPage/Sidebar'
+import PoemBox from '~/components/pages/poem/PoemBox'
+import Sidebar from '~/components/pages/poem/Sidebar'
 
 export default function PoemPage() {
-	const handleTagClick = (tag: string, e: FormEvent) => {
-		e.preventDefault()
-		const currentSearchParams = new URLSearchParams(window.location.search)
-		const currentTags = currentSearchParams.get('tags')
-		const updatedTags = currentTags
-			? !currentTags.split(',').includes(tag)
-				? `${currentTags},${tag}`
-				: currentTags
-			: tag
-		currentSearchParams.set('tags', updatedTags)
-		const updatedSearch = `?${currentSearchParams.toString()}`
-		window.location.search = updatedSearch
-	}
-
 	return (
 		<main className="flex py-12 pr-14">
 			<div className="w-1/4 mx-10">
@@ -30,8 +15,8 @@ export default function PoemPage() {
 					<Form className="flex relative">
 						<input
 							type="text"
-							className="w-full py-3 rounded-sm outline-none border-none px-2 pr-11 bg-cWhite"
-							placeholder="جستجو"
+							className="w-full py-3 rounded-sm outline-none border-none px-2 pr-11 bg-cWhite placeholder:text-sm"
+							placeholder="جستجوی یک یا چند کلمه در شعر مورد نظر"
 						/>
 						<button className="h-1/2 absolute right-[0.6rem] top-1/2 transform -translate-y-1/2 z-10">
 							<MagnifyingGlassIcon className="h-full" />
@@ -40,9 +25,9 @@ export default function PoemPage() {
 				</div>
 
 				<div className="flex flex-col gap-y-4">
-					<PoemBox onTagClick={handleTagClick} />
-					<PoemBox onTagClick={handleTagClick} />
-					<PoemBox onTagClick={handleTagClick} />
+					<PoemBox />
+					<PoemBox />
+					<PoemBox />
 				</div>
 			</div>
 		</main>

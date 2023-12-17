@@ -1,5 +1,4 @@
 import { Link } from '@remix-run/react'
-import type { FormEvent } from 'react'
 
 const POEM = [
 	[
@@ -22,11 +21,7 @@ const POEM = [
 
 const TAGS = ['برچسب1', 'برچسب2', 'برچسب3']
 
-export default function PoemBox({
-	onTagClick,
-}: {
-	onTagClick: (tag: string, e: FormEvent) => void
-}) {
+export default function PoemBox() {
 	return (
 		<div className="rounded-sm overflow-hidden drop-shadow-md">
 			<div className="py-2 px-4 flex justify-between bg-green_dark text-primary">
@@ -51,17 +46,16 @@ export default function PoemBox({
 				</div>
 				<p className="pr-4 pb-2">
 					{TAGS.map((tag, i, arr) => (
-						<>
+						<span key={i}>
 							<Link
-								onClick={(e) => onTagClick(tag, e)}
-								to={'/poem'}
+								to={`?tag=${tag}`}
 								className="text-xs"
 								key={tag}
 							>
 								{tag}
 							</Link>
 							{i !== arr.length - 1 && ' - '}
-						</>
+						</span>
 					))}
 				</p>
 			</div>
