@@ -39,12 +39,12 @@ export default function App() {
 			</head>
 			<body
 				dir="rtl"
-				className="bg-main text-green_dark min-h-screen "
+				className="bg-main text-green_dark"
 				style={{ fontFamily: 'dirooz' }}
 			>
 				<Outlet />
 
-				<footer className="h-20" id="footer">
+				<footer className="bg-red-500" id="footer">
 					footer
 				</footer>
 

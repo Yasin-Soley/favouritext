@@ -6,7 +6,7 @@ const SUBJECTS = ['عشق', 'نفرت', 'دوستی']
 export default function Sidebar() {
 	return (
 		<>
-			<div className="h-1/6">
+			<div className="h-32">
 				<h3 className="font-bold text-2xl text-center">بخوان مرا</h3>
 				<p className="text-center mt-5 ">
 					کاربر عزیز، به صفحه شعر شخصی خوش آمدید!

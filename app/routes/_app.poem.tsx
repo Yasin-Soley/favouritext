@@ -10,8 +10,8 @@ export default function PoemPage() {
 				<Sidebar />
 			</div>
 
-			<div className="w-3/4 pr-16 pl-32">
-				<div className="h-1/6 flex flex-col justify-center">
+			<div className="w-3/4 pr-16 pl-32 flex flex-col">
+				<div className="h-32 flex flex-col justify-center">
 					<Form className="flex relative">
 						<input
 							type="text"
@@ -24,7 +24,7 @@ export default function PoemPage() {
 					</Form>
 				</div>
 
-				<div className="flex flex-col gap-y-4">
+				<div className="flex flex-col gap-y-4 mt-auto">
 					<PoemBox />
 					<PoemBox />
 					<PoemBox />
