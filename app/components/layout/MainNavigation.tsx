@@ -1,7 +1,7 @@
 import { Form, Link, useRouteLoaderData } from '@remix-run/react'
 // import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 
-import Button from '../Button'
+import Button from '../common/Button'
 import NavigateLink from './NavigateLink'
 
 export default function MainNavigation() {

@@ -1,7 +1,7 @@
 import { Form, Link, useActionData, useNavigation } from '@remix-run/react'
 
 import type { action } from '~/routes/auth'
-import Button from './Button'
+import Button from './common/Button'
 import FormControl from './FormControl'
 
 const Auth = ({ mode }: { mode: string }) => {

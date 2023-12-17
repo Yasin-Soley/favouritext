@@ -13,7 +13,9 @@ import {
 import stylesheet from '~/styles/style.css'
 
 import { getUserFromSession } from './data/auth.server'
-import MainNavigation from './components/navigation/MainNavigation'
+import MainNavigation from './components/layout/MainNavigation'
+
+import Footer from './components/layout/Footer'
 
 export const links: LinksFunction = () => [
 	{ rel: 'stylesheet', href: stylesheet },
@@ -44,9 +46,7 @@ export default function App() {
 			>
 				<Outlet />
 
-				<footer className="bg-red-500" id="footer">
-					footer
-				</footer>
+				<Footer />
 
 				<ScrollRestoration />
 				<Scripts />
