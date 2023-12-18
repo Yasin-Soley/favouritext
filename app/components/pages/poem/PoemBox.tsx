@@ -24,7 +24,7 @@ const TAGS = ['برچسب1', 'برچسب2', 'برچسب3']
 export default function PoemBox() {
 	return (
 		<div className="rounded-sm overflow-hidden drop-shadow-md">
-			<div className=" py-2 px-4 flex justify-between bg-green_dark text-primary">
+			<div className="py-2 px-4 flex justify-between bg-green_dark text-primary">
 				<h3 className="">نام انتخابی برای شعر</h3>
 				<h4 className="text-sm">نام شاعر</h4>
 			</div>

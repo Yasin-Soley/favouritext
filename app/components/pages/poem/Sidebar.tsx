@@ -1,15 +1,19 @@
+import type { loader } from '~/routes/_app.poem'
 import FilterBox from './FilterBox'
+import { useLoaderData } from '@remix-run/react'
 
 const POETS = ['حافظ', 'سعدی', 'مولانا']
 const SUBJECTS = ['عشق', 'نفرت', 'دوستی']
 
 export default function Sidebar() {
+	const username = useLoaderData<typeof loader>()
+
 	return (
 		<>
-			<div className="h-32">
+			<div className="h-24">
 				<h3 className="font-bold text-2xl text-center">بخوان مرا</h3>
-				<p className="text-center mt-5 ">
-					کاربر عزیز، به صفحه شعر شخصی خوش آمدید!
+				<p className="mt-5 text-sm text-center">
+					{username}، خوش آمدید!
 				</p>
 			</div>
 			<div className="flex flex-col rounded-sm overflow-hidden">
