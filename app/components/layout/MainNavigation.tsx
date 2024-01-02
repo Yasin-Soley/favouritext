@@ -32,7 +32,7 @@ export default function MainNavigation() {
 
 						<li>
 							<Link
-								className="block px-4 py-3 transition hover:bg-main  hover:text-green_dark"
+								className="block px-4 py-3 transition hover:bg-main  hover:text-green_dark rounded-t-sm"
 								to={`#footer`}
 							>
 								ارتباط با سازنده
