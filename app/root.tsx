@@ -69,7 +69,7 @@ export function ErrorBoundary() {
 			</head>
 			<body
 				dir="rtl"
-				className="bg-primary text-secondary"
+				className="bg-main text-green_dark"
 				style={{ fontFamily: 'dirooz' }}
 			>
 				<header className="bg-secondary">

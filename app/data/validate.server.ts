@@ -53,3 +53,51 @@ export function validateCredentials(input: Credentials) {
 			username: input.username,
 		}
 }
+
+interface Poem {
+	poet: string
+	alias: string
+	tags: string[]
+	lines: { p1: string; p2: string }[]
+}
+
+type PoemError = {
+	poet?: string
+	alias?: string
+	lines?: { message: string; line: number }
+	tags?: string
+}
+
+function isValidPoet(value: string) {
+	return value && value.trim().length >= 0 && value.trim().length <= 22
+}
+function isValidAlias(value: string) {
+	return value && value.trim().length >= 0 && value.trim().length <= 12
+}
+function isValidLines(value: { p1: string; p2: string }[]) {
+	return value.findIndex(
+		(line) => line.p1.trim().length === 0 || line.p2.trim().length === 0
+	)
+}
+
+export function validatePoemData({ poet, tags, lines, alias }: Poem) {
+	let poemDataErrors: PoemError = {}
+
+	if (typeof poet === 'string' && !isValidPoet(poet)) {
+		poemDataErrors.poet = 'نام شاعر را مجددا بررسی کنید!'
+	}
+
+	if (typeof alias === 'string' && !isValidAlias(alias)) {
+		poemDataErrors.alias = 'نام انتخابی شعر را مجددا بررسی کنید!'
+	}
+
+	const lineValidation = isValidLines(lines)
+	if (lineValidation !== -1) {
+		poemDataErrors.lines = {
+			line: lineValidation,
+			message: 'این بیت را بررسی کنید!',
+		}
+	}
+
+	if (Object.keys(poemDataErrors).length > 0) throw poemDataErrors
+}

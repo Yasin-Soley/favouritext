@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react'
 import { Form, Link } from '@remix-run/react'
 import { PlusIcon, XCircleIcon } from '@heroicons/react/24/solid'
+import { validatePoemData } from '~/data/validate.server'
+import type { ActionFunctionArgs } from '@remix-run/node'
 
 interface PoemLine {
 	p1: string
@@ -80,8 +82,31 @@ export default function AddPoemPage() {
 	const handleSubmitPoem = (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
 	) => {
+		// const poemLines = [
+		//   { p1: 'Line 1 Part 1', p2: 'Line 1 Part 2' },
+		//   { p1: 'Line 2 Part 1', p2: 'Line 2 Part 2' },
+		//   // ... add more lines
+		// ];
+
+		// const poem = await prisma.poem.create({
+		//   data: {
+		//     title: 'My Poem',
+		//     lines: {
+		//       create: poemLines,
+		//     },
+		//   },
+		// });
+
 		// TODO: get input values
+		const data = {
+			poet,
+			alias: poemName,
+			tags,
+			lines,
+		}
+
 		// TODO: validate input values
+		validatePoemData(data)
 		// TODO: submitting form
 		// TODO: add action function for handling submit
 	}
@@ -202,11 +227,11 @@ export default function AddPoemPage() {
 									className="outline-none bg-transparent placeholder:text-green_dark placeholder:text-xs border-b border-green_dark mr-4"
 								/>
 							</div>
-							<p className="mt-4 text-green_dark text-sm">
+							<p className="mt-4 flex gap-x-2  text-green_dark text-sm">
 								{tags.map((tag, index) => (
 									<span
 										key={index}
-										className="ml-2 px-2 py-0.5 rounded-sm bg-green_dark text-primary"
+										className="px-2 py-0.5 rounded-sm bg-green_dark text-primary"
 									>
 										{tag}
 										<button
@@ -241,3 +266,5 @@ export default function AddPoemPage() {
 		</main>
 	)
 }
+
+export const action = async ({ request }: ActionFunctionArgs) => {}

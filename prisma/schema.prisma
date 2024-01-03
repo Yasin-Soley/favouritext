@@ -12,8 +12,36 @@ datasource db {
 
 model User {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
+  username String @unique
   email    String @unique
   password String
+}
+
+model PoemLine {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  p1 String
+  p2 String
+
+  Poem   Poem?   @relation(fields: [poemId], references: [id])
+  poemId String? @db.ObjectId
+}
+
+model Poem {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  alias     String
+  poet      Poet       @relation(fields: [poetId], references: [id])
+  poetId    String     @db.ObjectId
+  poemLines PoemLine[]
+  tags      String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Poet {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  Poem Poem[]
 }
 
 // !----
