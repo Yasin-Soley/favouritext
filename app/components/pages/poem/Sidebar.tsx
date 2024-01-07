@@ -24,11 +24,16 @@ export default function Sidebar() {
 
 				<div className="text-green_dark bg-green_light px-5">
 					<FilterBox
+						type="poets"
 						heading="بر اساس شاعر"
 						data={poetsFilter}
 						border
 					/>
-					<FilterBox heading="بر اساس موضوع" data={tagsFilter} />
+					<FilterBox
+						type="tags"
+						heading="بر اساس موضوع"
+						data={tagsFilter}
+					/>
 				</div>
 			</div>
 		</>

@@ -3,7 +3,7 @@ import { useSearchParams } from '@remix-run/react'
 
 import { getUserFromSession, login, signup } from '@/data/auth.server'
 import { isCustomError } from '@/utils'
-import Auth from '@/components/Auth'
+import Auth from '@/components/pages/auth/Auth'
 import {
 	validateCredentials,
 	type ValidationError,
@@ -62,7 +62,7 @@ export const action = async ({ request }: LoaderFunctionArgs) => {
 		}
 	} catch (error: any) {
 		if (isCustomError(error)) {
-			return { credentials: error.message }
+			throw { credentials: error.message }
 		}
 		return error as ValidationError
 	}

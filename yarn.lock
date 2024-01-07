@@ -1573,6 +1573,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-paginate@npm:^7.1.4":
+  version: 7.1.4
+  resolution: "@types/react-paginate@npm:7.1.4"
+  dependencies:
+    "@types/react": "*"
+  checksum: 3dbada2ab364307382adce1283220c83b743bfb056508dac6c513cfc1ce6b703e98129717abb052739106ae02eaab847b8b7037e7ca6b666eba86c9879e70d74
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:*, @types/react@npm:^18.2.20":
   version: 18.2.38
   resolution: "@types/react@npm:18.2.38"
@@ -1958,12 +1967,14 @@ __metadata:
     "@types/bcryptjs": ^2.4.6
     "@types/react": ^18.2.20
     "@types/react-dom": ^18.2.7
+    "@types/react-paginate": ^7.1.4
     bcryptjs: ^2.4.3
     eslint: ^8.38.0
     isbot: ^3.6.8
     prisma: latest
     react: ^18.2.0
     react-dom: ^18.2.0
+    react-paginate: ^8.2.0
     tailwindcss: ^3.3.5
     typescript: ^5.1.6
   languageName: unknown
@@ -6857,7 +6868,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.8.1":
+"prop-types@npm:^15, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -6981,6 +6992,17 @@ __metadata:
   version: 17.0.2
   resolution: "react-is@npm:17.0.2"
   checksum: 9d6d111d8990dc98bc5402c1266a808b0459b5d54830bbea24c12d908b536df7883f268a7868cfaedde3dd9d4e0d574db456f84d2e6df9c4526f99bb4b5344d8
+  languageName: node
+  linkType: hard
+
+"react-paginate@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "react-paginate@npm:8.2.0"
+  dependencies:
+    prop-types: ^15
+  peerDependencies:
+    react: ^16 || ^17 || ^18
+  checksum: a0969b4ef27be466ef3e052e2c7c61fca60af24e0d10c76770ebd9953ad6131206a276dfc335e61cf35aa494ff3aacc2610682e3192d7f2ee9541928edb46721
   languageName: node
   linkType: hard
 

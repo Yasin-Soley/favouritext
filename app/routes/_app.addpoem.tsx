@@ -9,7 +9,7 @@ import { getUserFromSession, requireUserSession } from '@/data/auth.server'
 
 import PoemForm from '@/components/pages/addpoem/PoemForm'
 import { addPoem } from '@/data/poem.server'
-import { isCustomError } from '@/utils'
+// import { isCustomError } from '@/utils'
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
 	return await requireUserSession(request)
@@ -45,9 +45,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 		return redirect('/poem')
 	} catch (error: any) {
-		if (isCustomError(error)) {
-			return { credentials: error.message }
-		}
+		// if (isCustomError(error)) {
+		// 	return { credentials: error.message }
+		// }
 		return error as PoemError
 	}
 }

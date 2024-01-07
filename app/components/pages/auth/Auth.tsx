@@ -1,6 +1,6 @@
 import { Form, Link, useActionData, useNavigation } from '@remix-run/react'
 
-import Button from './common/Button'
+import Button from '../../common/Button'
 import FormControl from './FormControl'
 import type { ValidationError } from '@/data/validate.server'
 

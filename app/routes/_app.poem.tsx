@@ -1,11 +1,15 @@
+// import { useState } from 'react'
 import { Form, useLoaderData } from '@remix-run/react'
+import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
 
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
-import PoemBox from '@/components/pages/poem/PoemBox'
-import Sidebar from '@/components/pages/poem/Sidebar'
-import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
+
 import { getUsernameById, requireUserSession } from '@/data/auth.server'
 import { getAllPoems } from '@/data/poem.server'
+import PoemBox from '@/components/pages/poem/PoemBox'
+import Sidebar from '@/components/pages/poem/Sidebar'
+import FAB from '@/components/common/FAB'
+// import PaginatedItems from '@/components/common/Pagination'
 
 export const meta: MetaFunction = () => {
 	return [
@@ -30,17 +34,23 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 		(item, index) => tagsFilter.indexOf(item) === index
 	)
 
-	const poetsFilter = poems.map((poem) => poem.poet)
+	let poetsFilter = poems.map((poem) => poem.poet)
+	poetsFilter = poetsFilter.filter(
+		(item, index) => poetsFilter.indexOf(item) === index
+	)
+
+	console.log(tagsFilter, poetsFilter)
 
 	return { username, poems, tagsFilter, poetsFilter }
 }
 
 export default function PoemPage() {
+	// const [poemPage, setPoemPage] = useState(1)
+
 	const { poems } = useLoaderData<typeof loader>()
-	console.log(poems)
 
 	return (
-		<main className="flex py-12 pr-14">
+		<main className="flex py-12 px-14">
 			<div className="w-1/4 mx-10">
 				<Sidebar />
 			</div>
@@ -61,10 +71,16 @@ export default function PoemPage() {
 
 				<div className="flex flex-col gap-y-4">
 					{poems.map((poem) => (
-						<PoemBox key={poem.alias} {...poem} />
+						<PoemBox key={poem.id} {...poem} />
 					))}
 				</div>
+
+				<div className="mt-10 bg-red-50">
+					{/* <PaginatedItems poems={poems} itemsPerPage={3} /> */}
+				</div>
 			</div>
+
+			<FAB />
 		</main>
 	)
 }

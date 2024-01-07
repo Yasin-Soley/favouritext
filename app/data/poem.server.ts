@@ -38,6 +38,7 @@ export async function getAllPoems(userId: string) {
 		})
 
 		listOfPoems.push({
+			id,
 			poet: poet.name,
 			alias,
 			tags,
