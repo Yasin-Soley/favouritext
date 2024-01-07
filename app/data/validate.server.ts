@@ -1,4 +1,4 @@
-import type { Credentials } from '~/utils'
+import type { Credentials } from '@/utils'
 
 function isValidEmail(value: string) {
 	return value && value.includes('@') && value.includes('.com')
@@ -54,17 +54,17 @@ export function validateCredentials(input: Credentials) {
 		}
 }
 
-interface Poem {
+export interface Poem {
 	poet: string
 	alias: string
-	tags: string[]
-	lines: { p1: string; p2: string }[]
+	tags: string
+	lines: string
 }
 
-type PoemError = {
+export type PoemError = {
 	poet?: string
 	alias?: string
-	lines?: { message: string; line: number }
+	lines?: { lineNumber: number; part: string }
 	tags?: string
 }
 
@@ -72,12 +72,29 @@ function isValidPoet(value: string) {
 	return value && value.trim().length >= 0 && value.trim().length <= 22
 }
 function isValidAlias(value: string) {
-	return value && value.trim().length >= 0 && value.trim().length <= 12
+	return value && value.trim().length >= 0 && value.trim().length <= 20
 }
-function isValidLines(value: { p1: string; p2: string }[]) {
-	return value.findIndex(
-		(line) => line.p1.trim().length === 0 || line.p2.trim().length === 0
-	)
+
+function isValidTags(value: string[]) {
+	return value[0] && value.length <= 5
+}
+
+export type PoemLine = { p1: string; p2: string }
+
+function isNotValidLines(value: PoemLine[]) {
+	let index
+	for (const lineNumber in value) {
+		if (!value[+lineNumber].p1.trim()) {
+			index = { lineNumber: +lineNumber, part: 'p1' }
+			break
+		}
+		if (!value[+lineNumber].p2.trim()) {
+			index = { lineNumber: +lineNumber, part: 'p2' }
+			break
+		}
+	}
+
+	return index
 }
 
 export function validatePoemData({ poet, tags, lines, alias }: Poem) {
@@ -91,13 +108,30 @@ export function validatePoemData({ poet, tags, lines, alias }: Poem) {
 		poemDataErrors.alias = 'نام انتخابی شعر را مجددا بررسی کنید!'
 	}
 
-	const lineValidation = isValidLines(lines)
-	if (lineValidation !== -1) {
-		poemDataErrors.lines = {
-			line: lineValidation,
-			message: 'این بیت را بررسی کنید!',
-		}
+	let modifiedTags = tags.split(',')
+	if (typeof tags === 'string' && !isValidTags(modifiedTags)) {
+		poemDataErrors.tags =
+			'برچسب ها را مجددا بررسی کنید. حداقل 1 و حداکثر 5 برچسب اضافه کنید!'
+	}
+
+	let splitLines = lines.split('/')
+	let splitMonostich = splitLines.map((line) => {
+		let obj = {} as PoemLine
+		obj.p1 = line.split(',')[0]
+		obj.p2 = line.split(',')[1]
+		return obj
+	})
+	if (isNotValidLines(splitMonostich)) {
+		poemDataErrors.lines = isNotValidLines(splitMonostich)
+	}
+
+	const verifiedData = {
+		poet,
+		alias,
+		tags: modifiedTags,
+		lines: splitMonostich,
 	}
 
 	if (Object.keys(poemDataErrors).length > 0) throw poemDataErrors
+	else return verifiedData
 }

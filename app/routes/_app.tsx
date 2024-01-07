@@ -1,5 +1,5 @@
 import { Outlet } from '@remix-run/react'
-import MainNavigation from '~/components/layout/MainNavigation'
+import MainNavigation from '@/components/layout/MainNavigation'
 
 export default function NotingLayout() {
 	return (

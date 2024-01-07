@@ -3,13 +3,13 @@ import { Link } from '@remix-run/react'
 import Separator from '../common/Seperator'
 import ChevronLeft from '../common/icons/ChevronLeft'
 
-import icon1 from '~/imgs/footer-icon-2.png'
-import icon2 from '~/imgs/footer-icon-3.png'
-import icon3 from '~/imgs/footer-icon-1.png'
-import InstagramIcon from '~/imgs/icon-instagram.png'
-import TelegramIcon from '~/imgs/icon-telegram.png'
-import FacebookIcon from '~/imgs/icon-facebook.png'
-import SkypeIcon from '~/imgs/icon-skype.png'
+import icon1 from '@/imgs/footer-icon-2.png'
+import icon2 from '@/imgs/footer-icon-3.png'
+import icon3 from '@/imgs/footer-icon-1.png'
+import InstagramIcon from '@/imgs/icon-instagram.png'
+import TelegramIcon from '@/imgs/icon-telegram.png'
+import FacebookIcon from '@/imgs/icon-facebook.png'
+import SkypeIcon from '@/imgs/icon-skype.png'
 
 export default function Footer() {
 	return (

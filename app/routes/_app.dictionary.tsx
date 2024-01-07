@@ -1,12 +1,11 @@
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
 
-import { requireUserSession } from '~/data/auth.server'
-import { getUsernameById } from '~/data/user.server'
+import { getUsernameById, requireUserSession } from '@/data/auth.server'
 
-import Sidebar from '~/components/pages/dictionary/Sidebar'
+import Sidebar from '@/components/pages/dictionary/Sidebar'
 import { Form } from '@remix-run/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
-import WordBox from '~/components/pages/dictionary/WordBox'
+import WordBox from '@/components/pages/dictionary/WordBox'
 
 export const meta: MetaFunction = () => {
 	return [

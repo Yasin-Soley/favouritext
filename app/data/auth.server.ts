@@ -2,7 +2,7 @@ import { createCookieSessionStorage, redirect } from '@remix-run/node'
 import pkg from 'bcryptjs'
 
 import { prisma } from './database.server'
-import { CustomError, type Credentials } from '~/utils'
+import { CustomError, type Credentials } from '@/utils'
 
 const sessionStorage = createCookieSessionStorage({
 	cookie: {
@@ -30,7 +30,6 @@ export async function createUserSession(userId: string, redirectPath: string) {
 	})
 }
 
-// ? this function acts an an guard; for pages that need user to be authenticated.
 export async function destroyUserSession(request: Request) {
 	const session = await sessionStorage.getSession(
 		request.headers.get('Cookie')
@@ -43,11 +42,7 @@ export async function destroyUserSession(request: Request) {
 	})
 }
 
-// ? but this one is just for getting user that we assume already is authenticated.
-// ? because user is in pages that supposed to be protected.
-// ? so has to be signed in, and therefor, there will be a userId.
-// ? ```if (!userId) return null```  is just a step added for sake of completeness.
-
+// ? this function acts an an guard; for pages that need user to be authenticated.
 export async function requireUserSession(request: Request) {
 	const userId = await getUserFromSession(request)
 
@@ -58,6 +53,10 @@ export async function requireUserSession(request: Request) {
 	return userId
 }
 
+// ? but this one is just for getting user that we assume already is authenticated.
+// ? because user is in pages that supposed to be protected.
+// ? so has to be signed in, and therefor, there will be a userId.
+// ? ```if (!userId) return null```  is just a step added for sake of completeness.
 export async function getUserFromSession(
 	request: Request
 ): Promise<string | null> {
@@ -122,4 +121,15 @@ export async function login({ email, password }: Credentials) {
 	}
 
 	return createUserSession(existingUser.id, '/dictionary')
+}
+
+// ? utils
+export async function getUsernameById(userId: string) {
+	const user = await prisma.user.findFirst({ where: { id: userId } })
+
+	if (!user) {
+		throw new CustomError('کاربر با ایمیل وارد شده یافت نشد!!', 404)
+	}
+
+	return user.username
 }

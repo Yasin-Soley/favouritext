@@ -1,11 +1,11 @@
 import { Form, Link, useActionData, useNavigation } from '@remix-run/react'
 
-import type { action } from '~/routes/auth'
 import Button from './common/Button'
 import FormControl from './FormControl'
+import type { ValidationError } from '@/data/validate.server'
 
 const Auth = ({ mode }: { mode: string }) => {
-	const validationErrors = useActionData<typeof action>()
+	const validationErrors = useActionData<ValidationError>()
 
 	const navigation = useNavigation()
 

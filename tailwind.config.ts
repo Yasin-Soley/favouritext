@@ -6,6 +6,7 @@ export default {
 		borderRadius: {
 			none: '0',
 			sm: '5px',
+			full: '100%',
 		},
 		extend: {
 			colors: {

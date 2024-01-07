@@ -1,8 +1,8 @@
 import { Link, useLoaderData } from '@remix-run/react'
 
-import type { loader } from '~/routes/_app.poem'
+import type { loader } from '@/routes/_app.poem'
 
-import { alphabets } from '~/utils'
+import { alphabets } from '@/utils'
 
 export default function Sidebar() {
 	const username = useLoaderData<typeof loader>()

@@ -1,11 +1,11 @@
-import { Form } from '@remix-run/react'
+import { Form, useLoaderData } from '@remix-run/react'
 
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
-import PoemBox from '~/components/pages/poem/PoemBox'
-import Sidebar from '~/components/pages/poem/Sidebar'
+import PoemBox from '@/components/pages/poem/PoemBox'
+import Sidebar from '@/components/pages/poem/Sidebar'
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
-import { requireUserSession } from '~/data/auth.server'
-import { getUsernameById } from '~/data/user.server'
+import { getUsernameById, requireUserSession } from '@/data/auth.server'
+import { getAllPoems } from '@/data/poem.server'
 
 export const meta: MetaFunction = () => {
 	return [
@@ -22,10 +22,15 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 	const userId = await requireUserSession(request)
 
 	const username = await getUsernameById(userId)
-	return username
+	const poems = await getAllPoems(userId)
+
+	return { username, poems }
 }
 
 export default function PoemPage() {
+	const { poems } = useLoaderData<typeof loader>()
+	console.log(poems)
+
 	return (
 		<main className="flex py-12 pr-14">
 			<div className="w-1/4 mx-10">
@@ -47,9 +52,9 @@ export default function PoemPage() {
 				</div>
 
 				<div className="flex flex-col gap-y-4">
-					<PoemBox />
-					<PoemBox />
-					<PoemBox />
+					{poems.map((poem) => (
+						<PoemBox key={poem.alias} {...poem} />
+					))}
 				</div>
 			</div>
 		</main>

@@ -1,13 +1,13 @@
 import { redirect, type LoaderFunctionArgs } from '@remix-run/node'
 import { useSearchParams } from '@remix-run/react'
 
-import { getUserFromSession, login, signup } from '~/data/auth.server'
-import { isCustomError } from '~/utils'
-import Auth from '~/components/Auth'
+import { getUserFromSession, login, signup } from '@/data/auth.server'
+import { isCustomError } from '@/utils'
+import Auth from '@/components/Auth'
 import {
 	validateCredentials,
 	type ValidationError,
-} from '~/data/validate.server'
+} from '@/data/validate.server'
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
 	const userId = await getUserFromSession(request)

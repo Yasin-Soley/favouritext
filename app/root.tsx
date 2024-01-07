@@ -10,7 +10,7 @@ import {
 	useRouteError,
 } from '@remix-run/react'
 
-import stylesheet from '~/styles/style.css'
+import stylesheet from '@/styles/style.css'
 
 import { getUserFromSession } from './data/auth.server'
 import MainNavigation from './components/layout/MainNavigation'

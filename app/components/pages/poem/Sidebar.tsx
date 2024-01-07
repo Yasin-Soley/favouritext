@@ -1,4 +1,4 @@
-import type { loader } from '~/routes/_app.poem'
+import type { loader } from '@/routes/_app.poem'
 import FilterBox from './FilterBox'
 import { useLoaderData } from '@remix-run/react'
 
@@ -6,7 +6,7 @@ const POETS = ['حافظ', 'سعدی', 'مولانا']
 const SUBJECTS = ['عشق', 'نفرت', 'دوستی']
 
 export default function Sidebar() {
-	const username = useLoaderData<typeof loader>()
+	const { username } = useLoaderData<typeof loader>()
 
 	return (
 		<>
