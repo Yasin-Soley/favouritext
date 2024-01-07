@@ -22,9 +22,17 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 	const userId = await requireUserSession(request)
 
 	const username = await getUsernameById(userId)
+
 	const poems = await getAllPoems(userId)
 
-	return { username, poems }
+	let tagsFilter: string[] = poems.map((poem) => poem.tags).flat()
+	tagsFilter = tagsFilter.filter(
+		(item, index) => tagsFilter.indexOf(item) === index
+	)
+
+	const poetsFilter = poems.map((poem) => poem.poet)
+
+	return { username, poems, tagsFilter, poetsFilter }
 }
 
 export default function PoemPage() {

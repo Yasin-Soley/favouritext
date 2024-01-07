@@ -86,3 +86,9 @@ export async function addPoem(poem: Poem, userId: string) {
 
 	return newPoem
 }
+
+export async function getTags(userId: string) {
+	const poets = await getAllPoems(userId)
+	console.log('poets:', poets)
+}
+export async function getPoets(userId: string) {}

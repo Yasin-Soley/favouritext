@@ -2,11 +2,8 @@ import type { loader } from '@/routes/_app.poem'
 import FilterBox from './FilterBox'
 import { useLoaderData } from '@remix-run/react'
 
-const POETS = ['حافظ', 'سعدی', 'مولانا']
-const SUBJECTS = ['عشق', 'نفرت', 'دوستی']
-
 export default function Sidebar() {
-	const { username } = useLoaderData<typeof loader>()
+	const { username, tagsFilter, poetsFilter } = useLoaderData<typeof loader>()
 
 	return (
 		<>
@@ -26,8 +23,12 @@ export default function Sidebar() {
 				</div>
 
 				<div className="text-green_dark bg-green_light px-5">
-					<FilterBox heading="بر اساس شاعر" data={POETS} border />
-					<FilterBox heading="بر اساس موضوع" data={SUBJECTS} />
+					<FilterBox
+						heading="بر اساس شاعر"
+						data={poetsFilter}
+						border
+					/>
+					<FilterBox heading="بر اساس موضوع" data={tagsFilter} />
 				</div>
 			</div>
 		</>
