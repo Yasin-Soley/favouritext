@@ -88,8 +88,29 @@ export async function addPoem(poem: Poem, userId: string) {
 	return newPoem
 }
 
-export async function getTags(userId: string) {
-	const poets = await getAllPoems(userId)
-	console.log('poets:', poets)
+export async function deletePoem(poemId: string) {
+	const poem = await prisma.poem.findUnique({
+		where: { id: poemId },
+	})
+
+	if (!poem) {
+		throw Error('شعر مورد نظر یافت نشد!')
+	}
+
+	const result = await prisma.$transaction([
+		prisma.poemLine.deleteMany({
+			where: {
+				poemId: poemId,
+			},
+		}),
+
+		prisma.poem.delete({
+			where: {
+				id: poemId,
+			},
+		}),
+	])
+
+	console.log(result)
+	return result
 }
-export async function getPoets(userId: string) {}

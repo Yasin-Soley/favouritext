@@ -3,7 +3,7 @@ import { Form, Link, useActionData, useSubmit } from '@remix-run/react'
 
 import { PlusIcon, XCircleIcon } from '@heroicons/react/24/solid'
 import type { PoemLine } from '@/data/validate.server'
-import type { action } from '@/routes/_app.addpoem'
+import type { action } from '@/routes/_app.poem_.add'
 
 export default function PoemForm() {
 	const [poet, setPoet] = useState('')

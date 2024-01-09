@@ -78,7 +78,7 @@ const Auth = ({ mode }: { mode: string }) => {
 						isButton
 						isLoading={isLoading}
 						type="submit"
-						className="bg-tGreenS hover:bg-hover disabled:hover:bg-tGreenS  text-cWhite w-full py-3"
+						className="bg-tGreenS hover:bg-hover disabled:hover:bg-tGreenS  text-cWhite w-full py-3 inline-block "
 					>
 						{btnText}
 					</Button>

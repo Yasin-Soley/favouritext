@@ -44,7 +44,10 @@ export default function MainNavigation() {
 					{userId ? (
 						<div className="flex flex-col justify-center ">
 							<Form action="/logout" method="DELETE">
-								<Button className="bg-main " isButton>
+								<Button
+									className="bg-main w-24 py-2 inline-block "
+									isButton
+								>
 									خروج
 								</Button>
 							</Form>
@@ -52,13 +55,13 @@ export default function MainNavigation() {
 					) : (
 						<>
 							<Button
-								className="bg-main border-l-2 border-secondary rounded-tl-none rounded-bl-none"
+								className="bg-main border-l-2 border-secondary rounded-tl-none rounded-bl-none w-24 py-2  inline-block "
 								to="/auth?mode=login"
 							>
 								ورود
 							</Button>
 							<Button
-								className="bg-main  rounded-tr-none rounded-br-none"
+								className="bg-main  rounded-tr-none rounded-br-none w-24 py-2  inline-block "
 								to="/auth?mode=signup"
 							>
 								ثبت‌نام

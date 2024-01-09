@@ -31,7 +31,7 @@ export default function FAB() {
 			className="fixed z-50 left-10 bg-green_dark w-12 h-12 rounded-full overflow-hidden"
 		>
 			<button className="block w-full">
-				<Link to="/addpoem">
+				<Link to="/poem/add">
 					<PlusCircleIcon className="text-primary" />
 				</Link>
 			</button>

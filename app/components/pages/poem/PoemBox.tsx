@@ -1,15 +1,28 @@
-import type { Poem } from '@/data/poem.server'
 import { Link } from '@remix-run/react'
 
-export default function PoemBox({ alias, poet, lines, tags }: Poem) {
+import Button from '@/components/common/Button'
+import type { Poem } from '@/data/poem.server'
+import { PencilIcon, XCircleIcon } from '@heroicons/react/24/solid'
+
+interface PoemBoxProps extends Poem {
+	id: string
+}
+
+export default function PoemBox({
+	alias,
+	poet,
+	lines,
+	tags,
+	id,
+}: PoemBoxProps) {
 	return (
-		<div className="rounded-sm overflow-hidden drop-shadow-md">
+		<div className="rounded-sm overflow-hidden drop-shadow-md" id={id}>
 			<div className="py-2 px-4 flex justify-between bg-green_dark text-primary">
 				<h3 className="">{alias}</h3>
 				<h4 className="text-sm">{poet}</h4>
 			</div>
 
-			<div className="bg-green_light flex flex-col">
+			<div className="bg-green_light flex flex-col relative">
 				<div className="flex justify-center items-center my-5">
 					<ul className="text-sm">
 						{lines.map((poem, index) => (
@@ -39,22 +52,24 @@ export default function PoemBox({ alias, poet, lines, tags }: Poem) {
 						</span>
 					))}
 				</p>
+				<div className="flex justify-center gap-x-4 mb-2">
+					<Button
+						to={`/poem/${id}/edit`}
+						className="flex justify-center items-center hover:gap-x-2 gap-x-1  hover:space-x-3 transition-all duration-200 ease-in-out rounded-sm w-24 text-xs text-primary bg-green_dark px-2 py-1"
+					>
+						ویرایش
+						<PencilIcon className="w-5" />
+					</Button>
+					<Button
+						to={`/poem/${id}/delete`}
+						className="flex justify-center items-center hover:gap-x-2 gap-x-1  hover:space-x-3 transition-all duration-200 ease-in-out rounded-sm w-24 text-xs bg-red-400 text-green_light px-2 py-1"
+						preventScrollReset
+					>
+						حذف
+						<XCircleIcon className="w-5" />
+					</Button>
+				</div>
 			</div>
 		</div>
 	)
 }
-// اَلا یا اَیُّهَا السّاقی اَدِرْ کَأسَاً و ناوِلْها
-
-// که عشق آسان نمود اوّل ولی افتاد مشکل‌ها
-
-// به بویِ نافه‌ای کآخر صبا زان طُرّه بگشاید
-
-// ز تابِ جَعدِ مشکینش چه خون افتاد در دل‌ها
-
-// مرا در منزلِ جانان چه امنِ عیش چون هر دَم
-
-// جَرَس فریاد می‌دارد که بَربندید مَحمِل‌ها
-
-// به مِی سجّاده رنگین کن گَرت پیرِ مُغان گوید
-
-// که سالِک بی‌خبر نَبوَد ز راه و رسمِ منزل‌ها

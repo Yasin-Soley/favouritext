@@ -8,6 +8,8 @@ interface ButtonProps {
 	isLoading?: boolean
 	to?: string
 	className?: string
+	preventScrollReset?: boolean
+	onClick?: () => void
 }
 
 export default function Button({
@@ -17,21 +19,32 @@ export default function Button({
 	isButton,
 	isLoading,
 	type,
+	preventScrollReset,
+	onClick,
 }: ButtonProps) {
 	className =
-		'w-24 py-2 text-sm inline-block text-center rounded-sm disabled:cursor-not-allowed disabled:bg-opacity-60 ' +
+		'disabled:cursor-not-allowed disabled:bg-opacity-60 text-sm text-center rounded-sm ' +
 		className
 
 	if (isButton)
 		return (
-			<button disabled={isLoading} type={type} className={className}>
+			<button
+				disabled={isLoading}
+				type={type}
+				className={className}
+				onClick={onClick}
+			>
 				{children}
 			</button>
 		)
 
 	return (
 		<button disabled={isLoading}>
-			<Link className={className} to={to!}>
+			<Link
+				className={className}
+				to={to!}
+				preventScrollReset={preventScrollReset}
+			>
 				{children}
 			</Link>
 		</button>

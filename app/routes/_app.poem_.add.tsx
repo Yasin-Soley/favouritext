@@ -7,7 +7,7 @@ import {
 import { validatePoemData, type PoemError } from '@/data/validate.server'
 import { getUserFromSession, requireUserSession } from '@/data/auth.server'
 
-import PoemForm from '@/components/pages/addpoem/PoemForm'
+import PoemForm from '@/components/pages/poem/PoemForm'
 import { addPoem } from '@/data/poem.server'
 // import { isCustomError } from '@/utils'
 

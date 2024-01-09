@@ -41,8 +41,9 @@ export default function App() {
 			</head>
 			<body
 				dir="rtl"
-				className="bg-main text-green_dark"
+				className="bg-main text-green_dark relative"
 				style={{ fontFamily: 'dirooz' }}
+				id="root"
 			>
 				<Outlet />
 
