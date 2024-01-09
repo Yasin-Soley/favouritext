@@ -54,7 +54,7 @@ export default function PoemBox({
 				</p>
 				<div className="flex justify-center gap-x-4 mb-2">
 					<Button
-						to={`/poem/${id}/edit`}
+						to={`/poem/${id}`}
 						className="flex justify-center items-center hover:gap-x-2 gap-x-1  hover:space-x-3 transition-all duration-200 ease-in-out rounded-sm w-24 text-xs text-primary bg-green_dark px-2 py-1"
 					>
 						ویرایش
@@ -62,7 +62,7 @@ export default function PoemBox({
 					</Button>
 					<Button
 						to={`/poem/${id}/delete`}
-						className="flex justify-center items-center hover:gap-x-2 gap-x-1  hover:space-x-3 transition-all duration-200 ease-in-out rounded-sm w-24 text-xs bg-red-400 text-green_light px-2 py-1"
+						className="flex justify-center items-center hover:gap-x-2 gap-x-1  hover:space-x-3 transition-all duration-150 ease-in-out rounded-sm w-24 text-xs bg-red-400  hover:bg-red-500 text-primary px-2 py-1"
 						preventScrollReset
 					>
 						حذف

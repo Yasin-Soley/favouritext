@@ -34,12 +34,18 @@ export default function FilterBox({
 			<h5 className="mb-5 font-bold text-sm">{heading}</h5>
 
 			<ul className="flex flex-col gap-y-2 text-sm">
-				{data.map((item, i) => (
-					<li key={i} className="flex gap-x-2">
-						<input type="checkbox" name={item} id={item} />
-						<label htmlFor={item}>{item}</label>
-					</li>
-				))}
+				{data.length === 0 ? (
+					<p className="text-xs flex flex-col">
+						ابتدا شعری ثبت کنید.
+					</p>
+				) : (
+					data.map((item, i) => (
+						<li key={i} className="flex gap-x-2">
+							<input type="checkbox" name={item} id={item} />
+							<label htmlFor={item}>{item}</label>
+						</li>
+					))
+				)}
 				<button
 					onClick={handleMoreButtonClick}
 					className="text-right opacity-80 "

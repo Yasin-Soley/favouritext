@@ -1,15 +1,47 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, type FormEvent } from 'react'
 import { Form, Link, useActionData, useSubmit } from '@remix-run/react'
 
 import { PlusIcon, XCircleIcon } from '@heroicons/react/24/solid'
 import type { PoemLine } from '@/data/validate.server'
 import type { action } from '@/routes/_app.poem_.add'
 
-export default function PoemForm() {
-	const [poet, setPoet] = useState('')
-	const [poemName, setPoemName] = useState('')
-	const [lines, setLines] = useState<PoemLine[]>([{ p1: '', p2: '' }])
-	const [tags, setTags] = useState<string[]>([])
+interface PoemFormProps {
+	poem?: {
+		id: string
+		poet: string
+		alias: string
+		tags: string[]
+		lines: {
+			id: string
+			p1: string
+			p2: string
+			poemId: string
+		}[]
+	}
+}
+
+export default function PoemForm({ poem }: PoemFormProps) {
+	let defaultValues
+	if (poem) {
+		defaultValues = {
+			poet: poem.poet,
+			alias: poem.alias,
+			tags: poem.tags,
+			lines: poem.lines,
+		}
+	} else {
+		defaultValues = {
+			poet: '',
+			alias: '',
+			tags: [],
+			lines: [{ p1: '', p2: '' }],
+		}
+	}
+
+	const [poet, setPoet] = useState(defaultValues.poet)
+	const [poemName, setPoemName] = useState(defaultValues.alias)
+	const [lines, setLines] = useState<PoemLine[]>(defaultValues.lines)
+	const [tags, setTags] = useState<string[]>(defaultValues.tags)
 	const [tagInput, setTagInput] = useState('')
 
 	const tagInputRef = useRef<HTMLInputElement>(null)
@@ -78,9 +110,7 @@ export default function PoemForm() {
 		}
 	}
 
-	const handleSubmitPoem = (
-		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-	) => {
+	const handleSubmitPoem = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
 		// xxxx aaaa
@@ -98,7 +128,11 @@ export default function PoemForm() {
 		formData.append('tags', tagsAsString)
 		formData.append('lines', poemAsString)
 
-		submit(formData, { method: 'POST' })
+		// submit(formData, { method: 'POST' })
+		submit(formData, {
+			method: poem ? 'PUT' : 'POST',
+			action: poem ? `/poem/${poem.id}` : `/poem/add`,
+		})
 	}
 
 	return (
@@ -106,6 +140,7 @@ export default function PoemForm() {
 			<Form
 				method="POST"
 				className="rounded-sm overflow-hidden drop-shadow-md"
+				onSubmit={handleSubmitPoem}
 			>
 				<div className="py-4 px-6 flex justify-between bg-green_dark text-primary">
 					<input
@@ -269,7 +304,6 @@ export default function PoemForm() {
 
 					<div className="mt-4 flex flex-col gap-y-3 items-center">
 						<button
-							onClick={(e) => handleSubmitPoem(e)}
 							type="submit"
 							className="bg-green_dark text-primary w-44 py-2 rounded-sm"
 						>

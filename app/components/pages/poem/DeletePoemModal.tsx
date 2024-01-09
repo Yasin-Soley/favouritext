@@ -38,6 +38,13 @@ export default function DeletePoemModal({
 					<p className="mt-2">آیا مطمئنید؟</p>
 
 					<div className="flex justify-center gap-x-4 mt-5">
+						<Button
+							className="bg-green_dark text-primary w-24 px-4 py-2"
+							isButton
+							onClick={handleModalClose}
+						>
+							بازگشت
+						</Button>
 						<Form method="DELETE">
 							<Button
 								className="bg-red-400 hover:bg-red-500 transition-colors text-primary w-24 px-4 py-2"
@@ -47,13 +54,6 @@ export default function DeletePoemModal({
 								بله
 							</Button>
 						</Form>
-						<Button
-							className="bg-green_dark text-primary w-24 px-4 py-2"
-							isButton
-							onClick={handleModalClose}
-						>
-							بازگشت
-						</Button>
 					</div>
 				</Modal>
 			</Overlay>

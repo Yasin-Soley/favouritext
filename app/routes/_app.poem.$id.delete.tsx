@@ -9,7 +9,7 @@ import { useLoaderData, useMatches } from '@remix-run/react'
 import DeletePoemModal from '@/components/pages/poem/DeletePoemModal'
 import { deletePoem } from '@/data/poem.server'
 
-interface ParentRouteData {
+export interface ParentRouteData {
 	username: string
 	poems: {
 		id: string

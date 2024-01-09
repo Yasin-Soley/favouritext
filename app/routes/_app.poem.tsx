@@ -9,6 +9,7 @@ import { getAllPoems } from '@/data/poem.server'
 import PoemBox from '@/components/pages/poem/PoemBox'
 import Sidebar from '@/components/pages/poem/Sidebar'
 import FAB from '@/components/common/FAB'
+import Button from '@/components/common/Button'
 // import PaginatedItems from '@/components/common/Pagination'
 
 export const meta: MetaFunction = () => {
@@ -69,6 +70,18 @@ export default function PoemPage() {
 					</div>
 
 					<div className="flex flex-col gap-y-4">
+						{poems.length === 0 && (
+							<p className="mt-5 text-center">
+								هنوز شعری اضافه نکرده اید. از{' '}
+								<Button
+									className="px-4 py-1 w-10 bg-green_dark text-primary"
+									to="add"
+								>
+									اینجا
+								</Button>{' '}
+								اقدام کنید!
+							</p>
+						)}
 						{poems.map((poem) => (
 							<PoemBox key={poem.id} {...poem} />
 						))}
