@@ -6,6 +6,7 @@ import Sidebar from '@/components/pages/dictionary/Sidebar'
 import { Form } from '@remix-run/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import WordBox from '@/components/pages/dictionary/WordBox'
+import FAB from '@/components/common/FAB'
 
 export const meta: MetaFunction = () => {
 	return [
@@ -52,6 +53,8 @@ export default function Dictionary() {
 			<div className="w-1/4 mx-10">
 				<Sidebar />
 			</div>
+
+			<FAB pos="right" to="/dictionary/add" />
 		</main>
 	)
 }

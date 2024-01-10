@@ -92,7 +92,7 @@ export default function PoemPage() {
 					</div>
 				</div>
 
-				<FAB />
+				<FAB pos="left" to="/poem/add" />
 			</main>
 			<Outlet />
 		</>

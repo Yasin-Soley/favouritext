@@ -2,7 +2,12 @@ import { useState, useEffect } from 'react'
 import { PlusCircleIcon } from '@heroicons/react/24/solid'
 import { Link } from '@remix-run/react'
 
-export default function FAB() {
+interface FAbProps {
+	pos: string
+	to: string
+}
+
+export default function FAB({ pos, to }: FAbProps) {
 	const [buttonBottom, setButtonBottom] = useState(20)
 
 	useEffect(() => {
@@ -28,10 +33,12 @@ export default function FAB() {
 		<div
 			style={{ bottom: `${buttonBottom}px` }}
 			title="افزودن شعر به گنجینه"
-			className="fixed z-50 left-10 bg-green_dark w-12 h-12 rounded-full overflow-hidden"
+			className={`fixed z-50 ${
+				pos === 'left' ? 'left-10' : 'right-10'
+			} bg-green_dark w-12 h-12 rounded-full overflow-hidden`}
 		>
 			<button className="block w-full">
-				<Link to="/poem/add">
+				<Link to={to}>
 					<PlusCircleIcon className="text-primary" />
 				</Link>
 			</button>
