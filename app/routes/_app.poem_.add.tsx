@@ -2,6 +2,7 @@ import {
 	redirect,
 	type ActionFunctionArgs,
 	type LoaderFunctionArgs,
+	type MetaFunction,
 } from '@remix-run/node'
 
 import { validatePoemData, type PoemError } from '@/data/validate.server'
@@ -9,7 +10,17 @@ import { getUserFromSession, requireUserSession } from '@/data/auth.server'
 
 import PoemForm from '@/components/pages/poem/PoemForm'
 import { addPoem } from '@/data/poem.server'
-// import { isCustomError } from '@/utils'
+
+export const meta: MetaFunction = () => {
+	return [
+		{ title: 'LOGO - Adding poem' },
+		{
+			name: 'description',
+			content:
+				'This is where I store the words that are new, interesting or valuable to me.',
+		},
+	]
+}
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
 	return await requireUserSession(request)

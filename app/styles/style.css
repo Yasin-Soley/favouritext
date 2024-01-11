@@ -3,8 +3,23 @@
 @tailwind utilities;
 
 @font-face {
-	font-family: 'dirooz';
-	src: url('../../public/assets/font/Dirooz.woff2') format('woff2'),
-		url('../../public/assets/font/Dirooz.woff') format('woff'),
-		url('../../public/assets/font/Dirooz.ttf') format('truetype');
+	font-family: 'B Roya';
+	src: local('B Roya'), local('BRoya'),
+		url('../../public/assets/font/BRoya.woff2') format('woff2'),
+		url('../../public/assets/font/BRoya.woff') format('woff'),
+		url('../../public/assets/font/BRoya.ttf') format('truetype');
+	font-weight: 400;
+	font-stretch: normal;
+	/*font-style: normal;*/
+}
+
+@font-face {
+	font-family: 'B Roya';
+	src: local('B Roya Bold'), local('BRoya-Bold'),
+		url('/public/assets/font/BRoyaBold.woff2') format('woff2'),
+		url('/public/assets/font/BRoyaBold.woff') format('woff'),
+		url('/public/assets/font/BRoyaBold.ttf') format('truetype');
+	font-weight: 700;
+	font-stretch: normal;
+	/*font-style: normal;*/
 }

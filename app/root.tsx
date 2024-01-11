@@ -42,7 +42,7 @@ export default function App() {
 			<body
 				dir="rtl"
 				className="bg-main text-green_dark relative"
-				style={{ fontFamily: 'dirooz' }}
+				style={{}}
 				id="root"
 			>
 				<Outlet />
@@ -71,7 +71,7 @@ export function ErrorBoundary() {
 			<body
 				dir="rtl"
 				className="bg-main text-green_dark relative"
-				style={{ fontFamily: 'dirooz' }}
+				style={{ fontFamily: 'B Roya' }}
 			>
 				<header className="bg-secondary">
 					<MainNavigation />

@@ -48,7 +48,7 @@ export default function FilterBox({
 				)}
 				<button
 					onClick={handleMoreButtonClick}
-					className="text-right opacity-80 "
+					className="text-right text-xs mt-4"
 				>
 					{btnText}
 				</button>

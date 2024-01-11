@@ -302,7 +302,7 @@ export default function PoemForm({ poem }: PoemFormProps) {
 						</ul>
 					)}
 
-					<div className="mt-4 flex flex-col gap-y-3 items-center">
+					<div className="mt-10 flex flex-col gap-y-3 items-center">
 						<button
 							type="submit"
 							className="bg-green_dark text-primary w-44 py-2 rounded-sm"
