@@ -5,7 +5,7 @@ import type { loader } from '@/routes/_app.poem'
 import { alphabets } from '@/utils'
 
 export default function Sidebar() {
-	const username = useLoaderData<typeof loader>()
+	const { username } = useLoaderData<typeof loader>()
 
 	return (
 		<>

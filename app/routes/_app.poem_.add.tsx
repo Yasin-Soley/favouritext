@@ -37,6 +37,8 @@ export default function AddPoemPage() {
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
+	await requireUserSession(request)
+
 	// TODO: get input values
 	const formData = await request.formData()
 	const poet = formData.get('poet') as string

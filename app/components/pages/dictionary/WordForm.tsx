@@ -1,4 +1,4 @@
-import { Form, Link, useSubmit } from '@remix-run/react'
+import { Form, Link, useActionData, useSubmit } from '@remix-run/react'
 import { useRef, useState, type FormEvent } from 'react'
 
 import {
@@ -6,6 +6,7 @@ import {
 	PlusIcon,
 	XCircleIcon,
 } from '@heroicons/react/24/solid'
+import type { action } from '@/routes/_app.dictionary_.add'
 
 export default function WordForm() {
 	const [word, setWord] = useState('')
@@ -14,6 +15,8 @@ export default function WordForm() {
 	const [definitions, setDefinitions] = useState([''])
 	const [examples, setExamples] = useState([''])
 	const [appearances, setAppearances] = useState([''])
+
+	const validationErrors = useActionData<typeof action>()
 
 	const meanInputRef = useRef<HTMLInputElement>(null)
 	const submit = useSubmit()
@@ -38,14 +41,15 @@ export default function WordForm() {
 	}
 	const addMeaning = () => {
 		let meaningExists = meanings.includes(meaningInput)
-		if (meaningInput.trim() !== '' && !meaningExists) {
+		let passedLimitCount = meanings.length === 3
+		if (meaningInput.trim() !== '' && !meaningExists && !passedLimitCount) {
 			setMeanings((prevMeans) => [...prevMeans, meaningInput.trim()])
 			setMeaningInput('')
 			meanInputRef.current?.focus() // Focus the tagInput
 		}
 	}
 
-	// shared input for `definitions` & `examples`
+	// shared input for `definitions`, `examples` & 'appearances'
 	const handleSharedInputChange = (
 		type: string,
 		i: number,
@@ -92,10 +96,19 @@ export default function WordForm() {
 
 		const formData = new FormData()
 		formData.append('word', word)
-		formData.append('meanings', meanings.join(','))
-		formData.append('definitions', definitions.join(','))
-		formData.append('examples', examples.join(','))
-		formData.append('appearances', appearances.join(','))
+		formData.append('meanings', meanings.join('//'))
+		formData.append(
+			'definitions',
+			definitions.filter((val) => val.trim() !== '').join('//')
+		)
+		formData.append(
+			'examples',
+			examples.filter((val) => val.trim() !== '').join('//')
+		)
+		formData.append(
+			'appearances',
+			appearances.filter((val) => val.trim() !== '').join('//')
+		)
 
 		submit(formData, { method: 'POST' })
 		// submit(formData, {
@@ -121,17 +134,17 @@ export default function WordForm() {
 					/>
 
 					{meanings.length > 0 && (
-						<p className="flex gap-x-1 text-sm">
+						<p className="flex gap-x-1 text-xs">
 							{meanings.map((meaning, index) => (
 								<span
 									key={index}
-									className="px-4 py-0.5 rounded-sm bg-primary text-green_dark"
+									className="block relative rounded-sm bg-primary text-green_dark p-1"
 								>
-									{meaning}
+									<span className="">{meaning}</span>
 									<button
 										type="button"
 										onClick={() => deleteMeaning(index)}
-										className="mr-1 text-red-500"
+										className="mr-1 text-red-500 absolute left-full bottom-full transform -translate-x-1/2 translate-y-1/2"
 									>
 										<XCircleIcon className="w-4" />
 									</button>
@@ -140,10 +153,10 @@ export default function WordForm() {
 						</p>
 					)}
 
-					<div className="w-1/6 relative ml-5">
+					<div className="w-1/5 relative ml-5">
 						<input
 							dir="rtl"
-							className={`outline-none bg-transparent placeholder:text-primary  placeholder:text-sm border-b border-primary pb-1 w-full`}
+							className={`text-sm outline-none bg-transparent placeholder:text-primary  placeholder:text-sm border-b border-primary pb-1 w-full`}
 							type="text"
 							placeholder="معنی‌(ها)"
 							value={meaningInput}
@@ -193,7 +206,7 @@ export default function WordForm() {
 									placeholder={`${
 										index + 1
 									}. type your definition here`}
-									className={`outline-none bg-transparent placeholder:text-green_dark placeholder:text-sm border-b border-green_dark text-green_dark pb-1 flex-1 w-full mb-2`}
+									className={`outline-none bg-transparent placeholder:text-green_dark placeholder:text-sm placeholder:text-opacity-60 border-b-2 border-green_dark text-green_dark pb-1 flex-1 w-full mb-2`}
 								/>
 								<button
 									type="button"
@@ -238,7 +251,7 @@ export default function WordForm() {
 									placeholder={`${
 										index + 1
 									}. type your example here`}
-									className={`outline-none bg-transparent placeholder:text-green_dark placeholder:text-sm border-b border-green_dark text-green_dark pb-1 flex-1  w-full mb-2`}
+									className={`outline-none bg-transparent placeholder:text-green_dark placeholder:text-opacity-60 placeholder:text-sm border-b-2 border-green_dark text-green_dark pb-1 flex-1  w-full mb-2`}
 								/>
 								<button
 									type="button"
@@ -283,7 +296,7 @@ export default function WordForm() {
 									placeholder={`${
 										index + 1
 									}. type where you see the word `}
-									className={`outline-none bg-transparent placeholder:text-green_dark placeholder:text-sm border-b border-green_dark text-green_dark pb-1 flex-1  w-full mb-2`}
+									className={`outline-none bg-transparent placeholder:text-green_dark placeholder:text-opacity-60 placeholder:text-sm border-b-2 border-green_dark text-green_dark pb-1 flex-1  w-full mb-2`}
 								/>
 								<button
 									type="button"
@@ -299,6 +312,20 @@ export default function WordForm() {
 							</div>
 						))}
 					</div>
+
+					{validationErrors && (
+						<ul className="my-4" dir="rtl">
+							{Object.values(validationErrors).map((error, i) => (
+								<li
+									className="text-red-600 text-sm w-3/4 mb-1"
+									key={i}
+								>
+									{i + 1}.{' '}
+									{typeof error === 'string' && error}
+								</li>
+							))}
+						</ul>
+					)}
 
 					<div className="mt-10 flex flex-col gap-y-3 items-center">
 						<button

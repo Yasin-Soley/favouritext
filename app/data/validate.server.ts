@@ -54,6 +54,8 @@ export function validateCredentials(input: Credentials) {
 		}
 }
 
+// TODO! validate `POEM` data
+
 export interface Poem {
 	poet: string
 	alias: string
@@ -133,5 +135,82 @@ export function validatePoemData({ poet, tags, lines, alias }: Poem) {
 	}
 
 	if (Object.keys(poemDataErrors).length > 0) throw poemDataErrors
+	else return verifiedData
+}
+
+// TODO! validate `WORD` data
+
+function isValidWord(value: string) {
+	return value && value.trim().length >= 1 && value.trim().length <= 19
+}
+function isValidMeanings(value: string[]) {
+	return value[0] && value.length >= 1 && !value.includes('')
+}
+function isValidSentences(value: string[]) {
+	return value[0] && value.length >= 1 && !value.includes('')
+}
+
+export interface WordError {
+	word?: string
+	meanings?: string
+	examples?: string
+	definitions?: string
+	appearances?: string
+}
+
+interface WordData {
+	word: string
+	meanings: string
+	examples: string
+	definitions: string
+	appearances: string
+}
+
+export function validateWordData({
+	word,
+	meanings,
+	definitions,
+	examples,
+	appearances,
+}: WordData) {
+	let wordDataErrors: WordError = {}
+
+	if (typeof word === 'string' && !isValidWord(word)) {
+		wordDataErrors.word = 'واژه را مجددا بررسی کنید!'
+	}
+
+	let modifiedMeanings = meanings.split('//')
+	if (!isValidMeanings(modifiedMeanings)) {
+		wordDataErrors.meanings = 'معنی(ها) را مجددا بررسی کنید!'
+	}
+
+	let modifiedDefinitions = definitions.split('//')
+	if (!isValidSentences(modifiedDefinitions)) {
+		wordDataErrors.definitions =
+			'تعاریف را مجددا بررسی کنید. حداقل 1 تعریف اضافه کنید.'
+	}
+
+	let modifiedExamples = examples.split('//')
+	if (!isValidSentences(modifiedExamples)) {
+		wordDataErrors.examples =
+			'مثال ها را مجددا بررسی کنید. حداقل 1 مثال اضافه کنید!'
+	}
+
+	console.log(appearances)
+	let modifiedAppearances = appearances.split('//')
+	if (!isValidSentences(modifiedAppearances)) {
+		wordDataErrors.appearances =
+			'برای یادآوری و جستجوری بهتر، اضافه کنید کجا کلمه را مشاهده کردید. می‌تواند یک مقاله، کتاب، ، اپیزود خاصی از سریال و ... باشد'
+	}
+
+	const verifiedData = {
+		word,
+		meanings: modifiedMeanings,
+		definitions: modifiedDefinitions,
+		examples: modifiedExamples,
+		appearances: modifiedAppearances,
+	}
+
+	if (Object.keys(wordDataErrors).length > 0) throw wordDataErrors
 	else return verifiedData
 }

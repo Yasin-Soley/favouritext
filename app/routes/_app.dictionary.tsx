@@ -3,10 +3,12 @@ import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
 import { getUsernameById, requireUserSession } from '@/data/auth.server'
 
 import Sidebar from '@/components/pages/dictionary/Sidebar'
-import { Form } from '@remix-run/react'
+import { Form, useLoaderData } from '@remix-run/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import WordBox from '@/components/pages/dictionary/WordBox'
 import FAB from '@/components/common/FAB'
+import { getAllWords } from '@/data/word.server'
+import Button from '@/components/common/Button'
 
 export const meta: MetaFunction = () => {
 	return [
@@ -23,10 +25,15 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 	const userId = await requireUserSession(request)
 
 	const username = await getUsernameById(userId)
-	return username
+
+	const words = await getAllWords(userId)
+
+	return { username, words }
 }
 
 export default function Dictionary() {
+	const { words } = useLoaderData<typeof loader>()
+
 	return (
 		<main className="flex py-12 pr-14">
 			<div className="w-3/4 pr-32 pl-16 flex flex-col">
@@ -44,9 +51,21 @@ export default function Dictionary() {
 				</div>
 
 				<div className="flex flex-col gap-y-4">
-					<WordBox />
-					<WordBox />
-					<WordBox />
+					{words.length === 0 && (
+						<p className="mt-5 text-center">
+							هنوز واژه‌ای اضافه نکرده اید. از{' '}
+							<Button
+								className="px-4 py-1 w-10 bg-green_dark text-primary"
+								to="add"
+							>
+								اینجا
+							</Button>{' '}
+							اقدام کنید!
+						</p>
+					)}
+					{words.map((word) => (
+						<WordBox key={word.id} {...word} />
+					))}
 				</div>
 			</div>
 

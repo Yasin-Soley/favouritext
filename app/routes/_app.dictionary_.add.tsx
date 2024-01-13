@@ -1,11 +1,14 @@
 import {
+	redirect,
 	type ActionFunctionArgs,
 	type LoaderFunctionArgs,
 	type MetaFunction,
 } from '@remix-run/node'
 
-import { requireUserSession } from '@/data/auth.server'
+import { getUserFromSession, requireUserSession } from '@/data/auth.server'
 import WordForm from '@/components/pages/dictionary/WordForm'
+import { validateWordData, type WordError } from '@/data/validate.server'
+import { addWord } from '@/data/word.server'
 
 export const meta: MetaFunction = () => {
 	return [
@@ -37,6 +40,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	const formData = await request.formData()
 	const word = formData.get('word') as string
 	const meanings = formData.get('meanings') as string
+	const definitions = formData.get('definitions') as string
 	const examples = formData.get('examples') as string
 	const appearances = formData.get('appearances') as string
 
@@ -44,11 +48,31 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 		word,
 		meanings,
 		examples,
+		definitions,
 		appearances,
 	})
 
-	// TODO: validation
-	// TODO: submitting
+	try {
+		// TODO: validate input values
+		const verifiedData = validateWordData({
+			word,
+			meanings,
+			examples,
+			definitions,
+			appearances,
+		})
 
-	return null
+		// TODO: add word to database
+		const userId = await getUserFromSession(request)
+		let addedWord
+		if (userId) addedWord = await addWord(verifiedData, userId)
+		console.log(addedWord)
+
+		return redirect('/dictionary')
+	} catch (error: any) {
+		// if (isCustomError(error)) {
+		// 	return { credentials: error.message }
+		// }
+		return error as WordError
+	}
 }
