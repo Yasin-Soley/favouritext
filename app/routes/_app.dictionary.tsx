@@ -3,7 +3,7 @@ import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
 import { getUsernameById, requireUserSession } from '@/data/auth.server'
 
 import Sidebar from '@/components/pages/dictionary/Sidebar'
-import { Form, useLoaderData } from '@remix-run/react'
+import { Form, Outlet, useLoaderData } from '@remix-run/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import WordBox from '@/components/pages/dictionary/WordBox'
 import FAB from '@/components/common/FAB'
@@ -35,45 +35,51 @@ export default function Dictionary() {
 	const { words } = useLoaderData<typeof loader>()
 
 	return (
-		<main className="flex py-12 pr-14">
-			<div className="w-3/4 pr-32 pl-16 flex flex-col">
-				<div dir="ltr" className="h-24 flex flex-col justify-center">
-					<Form className="flex relative">
-						<input
-							type="text"
-							className="w-full py-3 rounded-sm outline-none border-none px-2 pl-11 bg-cWhite placeholder:text-sm"
-							placeholder="search a word..."
-						/>
-						<button className="h-1/2 absolute left-[0.6rem] top-1/2 transform -translate-y-1/2 z-10">
-							<MagnifyingGlassIcon className="h-full" />
-						</button>
-					</Form>
+		<>
+			<main className="flex py-12 pr-14">
+				<div className="w-3/4 pr-32 pl-16 flex flex-col">
+					<div
+						dir="ltr"
+						className="h-24 flex flex-col justify-center"
+					>
+						<Form className="flex relative">
+							<input
+								type="text"
+								className="w-full py-3 rounded-sm outline-none border-none px-2 pl-11 bg-cWhite placeholder:text-sm"
+								placeholder="search a word..."
+							/>
+							<button className="h-1/2 absolute left-[0.6rem] top-1/2 transform -translate-y-1/2 z-10">
+								<MagnifyingGlassIcon className="h-full" />
+							</button>
+						</Form>
+					</div>
+
+					<div className="flex flex-col gap-y-4">
+						{words.length === 0 && (
+							<p className="mt-5 text-center">
+								هنوز واژه‌ای اضافه نکرده اید. از{' '}
+								<Button
+									className="px-4 py-1 w-10 bg-green_dark text-primary"
+									to="add"
+								>
+									اینجا
+								</Button>{' '}
+								اقدام کنید!
+							</p>
+						)}
+						{words.map((word) => (
+							<WordBox key={word.id} {...word} />
+						))}
+					</div>
 				</div>
 
-				<div className="flex flex-col gap-y-4">
-					{words.length === 0 && (
-						<p className="mt-5 text-center">
-							هنوز واژه‌ای اضافه نکرده اید. از{' '}
-							<Button
-								className="px-4 py-1 w-10 bg-green_dark text-primary"
-								to="add"
-							>
-								اینجا
-							</Button>{' '}
-							اقدام کنید!
-						</p>
-					)}
-					{words.map((word) => (
-						<WordBox key={word.id} {...word} />
-					))}
+				<div className="w-1/4 mx-10">
+					<Sidebar />
 				</div>
-			</div>
 
-			<div className="w-1/4 mx-10">
-				<Sidebar />
-			</div>
-
-			<FAB pos="right" to="/dictionary/add" />
-		</main>
+				<FAB pos="right" to="/dictionary/add" />
+			</main>
+			<Outlet />
+		</>
 	)
 }

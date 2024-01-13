@@ -1,3 +1,5 @@
+import Button from '@/components/common/Button'
+import { PencilIcon, XCircleIcon } from '@heroicons/react/24/solid'
 import type { Word } from '@prisma/client'
 
 export default function WordBox({
@@ -6,6 +8,7 @@ export default function WordBox({
 	appearance,
 	definitions,
 	examples,
+	id,
 }: Word) {
 	return (
 		<div dir="ltr" className="rounded-sm overflow-hidden drop-shadow-md">
@@ -50,6 +53,24 @@ export default function WordBox({
 							{appearance}
 						</p>
 					))}
+				</div>
+
+				<div className="flex justify-center gap-x-4 mt-4 mb-2">
+					<Button
+						to={`/dictionary/${id}`}
+						className="flex justify-center items-center hover:gap-x-2 gap-x-1  hover:space-x-3 transition-all duration-200 ease-in-out rounded-sm w-24 text-xs text-primary bg-green_dark px-2 py-1"
+					>
+						Edit
+						<PencilIcon className="w-5" />
+					</Button>
+					<Button
+						to={`/dictionary/${id}/delete`}
+						className="flex justify-center items-center hover:gap-x-2 gap-x-1  hover:space-x-3 transition-all duration-150 ease-in-out rounded-sm w-24 text-xs bg-red-400  hover:bg-red-500 text-primary px-2 py-1"
+						preventScrollReset
+					>
+						Delete
+						<XCircleIcon className="w-5" />
+					</Button>
 				</div>
 			</div>
 		</div>

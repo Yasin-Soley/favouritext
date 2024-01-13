@@ -50,3 +50,38 @@ export async function addWord(word: Word, userId: string) {
 
 	return newWord
 }
+
+export async function getWordById(wordId: string) {
+	const word = await prisma.word.findUnique({
+		where: {
+			id: wordId,
+		},
+	})
+
+	if (!word) {
+		throw Error('واژه مورد نظر یافت نشد.')
+	}
+
+	return word
+}
+
+export async function deleteWord(wordId: string) {
+	const word = await prisma.word.findUnique({
+		where: { id: wordId },
+	})
+
+	if (!word) {
+		throw Error('واژۀ مورد نظر یافت نشد!')
+	}
+
+	const result = await prisma.$transaction([
+		prisma.word.delete({
+			where: {
+				id: wordId,
+			},
+		}),
+	])
+
+	console.log('result', result)
+	return result
+}

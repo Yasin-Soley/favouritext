@@ -16,6 +16,7 @@ import { getUserFromSession } from './data/auth.server'
 import MainNavigation from './components/layout/MainNavigation'
 
 import Footer from './components/layout/Footer'
+import Button from './components/common/Button'
 
 export const links: LinksFunction = () => [
 	{ rel: 'stylesheet', href: stylesheet },
@@ -77,13 +78,22 @@ export function ErrorBoundary() {
 					<MainNavigation />
 				</header>
 
-				<h1 className="text-center text-xl text-opacity-70 mt-16">
+				<h1 className="text-center text-2xl  font-bold mt-16">
 					{isRouteErrorResponse(error)
 						? error.data
 						: error instanceof Error
 						? error.message
 						: 'something went wrong'}
 				</h1>
+
+				<div className="mt-8 text-center">
+					<Button
+						to="/"
+						className="border-b-2 border-green_dark px-2 py-1 text-xl hover:bg-green_dark hover:text-primary transition-colors"
+					>
+						بازگشت به صفحه اصلی
+					</Button>
+				</div>
 				<Scripts />
 			</body>
 		</html>
