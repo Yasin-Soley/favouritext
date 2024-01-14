@@ -11,7 +11,11 @@ export default function WordBox({
 	id,
 }: Word) {
 	return (
-		<div dir="ltr" className="rounded-sm overflow-hidden drop-shadow-md">
+		<div
+			id={id}
+			dir="ltr"
+			className="rounded-sm overflow-hidden drop-shadow-md"
+		>
 			<div className="py-2 px-4 flex justify-between bg-green_dark text-primary">
 				<h3 className="mr-auto">{word}</h3>
 				<h4 className="text-sm flex gap-x-2">
