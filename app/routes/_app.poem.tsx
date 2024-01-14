@@ -10,6 +10,7 @@ import PoemBox from '@/components/pages/poem/PoemBox'
 import Sidebar from '@/components/pages/poem/Sidebar'
 import FAB from '@/components/common/FAB'
 import Button from '@/components/common/Button'
+import { useRef, useState } from 'react'
 // import PaginatedItems from '@/components/common/Pagination'
 
 export const meta: MetaFunction = () => {
@@ -44,9 +45,31 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 }
 
 export default function PoemPage() {
-	// const [poemPage, setPoemPage] = useState(1)
-
 	const { poems } = useLoaderData<typeof loader>()
+
+	const [searchTerm, setSearchTerm] = useState('')
+
+	const searchInputRef = useRef<HTMLInputElement>(null)
+
+	const filterPoems = () => {
+		if (!searchTerm.trim()) return poems
+
+		const lowercasedSearchTerm = searchTerm.toLowerCase()
+
+		return poems.filter(
+			(poem) =>
+				poem.poet.toLowerCase().includes(lowercasedSearchTerm) ||
+				poem.alias.toLowerCase().includes(lowercasedSearchTerm) ||
+				poem.tags.some((tag) =>
+					tag.toLowerCase().includes(lowercasedSearchTerm)
+				) ||
+				poem.lines.some((line) =>
+					[line.p1, line.p2].some((text) =>
+						text.toLowerCase().includes(lowercasedSearchTerm)
+					)
+				)
+		)
+	}
 
 	return (
 		<>
@@ -62,6 +85,9 @@ export default function PoemPage() {
 								type="text"
 								className="w-full py-3 rounded-sm outline-none border-none px-2 pr-11 bg-cWhite placeholder:text-sm"
 								placeholder="جستجوی یک یا چند کلمه در شعر مورد نظر"
+								value={searchTerm}
+								onChange={(e) => setSearchTerm(e.target.value)}
+								ref={searchInputRef}
 							/>
 							<button className="h-1/2 absolute right-[0.6rem] top-1/2 transform -translate-y-1/2 z-10">
 								<MagnifyingGlassIcon className="h-full" />
@@ -82,7 +108,22 @@ export default function PoemPage() {
 								اقدام کنید!
 							</p>
 						)}
-						{poems.map((poem) => (
+						{poems.length > 0 && filterPoems().length === 0 && (
+							<p className="mt-5 text-center flex flex-col items-center gap-y-5">
+								شعری یافت نشد!
+								<Button
+									className="px-4 block py-2 w-32 bg-green_dark text-primary"
+									isButton
+									onClick={() => {
+										setSearchTerm('')
+										searchInputRef.current?.focus()
+									}}
+								>
+									حذف فیلتر سرچ
+								</Button>
+							</p>
+						)}
+						{filterPoems().map((poem) => (
 							<PoemBox key={poem.id} {...poem} />
 						))}
 					</div>

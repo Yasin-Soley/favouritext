@@ -9,6 +9,7 @@ import WordBox from '@/components/pages/dictionary/WordBox'
 import FAB from '@/components/common/FAB'
 import { getAllWords } from '@/data/word.server'
 import Button from '@/components/common/Button'
+import { useRef, useState } from 'react'
 
 export const meta: MetaFunction = () => {
 	return [
@@ -34,6 +35,33 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function Dictionary() {
 	const { words } = useLoaderData<typeof loader>()
 
+	const [searchTerm, setSearchTerm] = useState('')
+
+	const searchInputRef = useRef<HTMLInputElement>(null)
+
+	const filterWords = () => {
+		if (!searchTerm.trim()) return words
+
+		const lowercasedSearchTerm = searchTerm.toLowerCase()
+
+		return words.filter(
+			(word) =>
+				word.word.toLowerCase().includes(lowercasedSearchTerm) ||
+				word.meanings.some((meaning) =>
+					meaning.toLowerCase().includes(lowercasedSearchTerm)
+				) ||
+				word.definitions.some((definition) =>
+					definition.toLowerCase().includes(lowercasedSearchTerm)
+				) ||
+				word.examples.some((example) =>
+					example.toLowerCase().includes(lowercasedSearchTerm)
+				) ||
+				word.appearance.some((appearance) =>
+					appearance.toLowerCase().includes(lowercasedSearchTerm)
+				)
+		)
+	}
+
 	return (
 		<>
 			<main className="flex py-12 pr-14">
@@ -47,6 +75,9 @@ export default function Dictionary() {
 								type="text"
 								className="w-full py-3 rounded-sm outline-none border-none px-2 pl-11 bg-cWhite placeholder:text-sm"
 								placeholder="search a word..."
+								value={searchTerm}
+								onChange={(e) => setSearchTerm(e.target.value)}
+								ref={searchInputRef}
 							/>
 							<button className="h-1/2 absolute left-[0.6rem] top-1/2 transform -translate-y-1/2 z-10">
 								<MagnifyingGlassIcon className="h-full" />
@@ -67,7 +98,22 @@ export default function Dictionary() {
 								اقدام کنید!
 							</p>
 						)}
-						{words.map((word) => (
+						{words.length > 0 && filterWords().length === 0 && (
+							<p className="mt-5 text-center flex flex-col items-center gap-y-5">
+								واژه‌ای یافت نشد!
+								<Button
+									className="px-4 block py-2 w-32 bg-green_dark text-primary"
+									isButton
+									onClick={() => {
+										setSearchTerm('')
+										searchInputRef.current?.focus()
+									}}
+								>
+									حذف فیلتر سرچ
+								</Button>
+							</p>
+						)}
+						{filterWords().map((word) => (
 							<WordBox key={word.id} {...word} />
 						))}
 					</div>
