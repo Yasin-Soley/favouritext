@@ -7,14 +7,35 @@ import {
 	XCircleIcon,
 } from '@heroicons/react/24/solid'
 import type { action } from '@/routes/_app.dictionary_.add'
+import type { Word } from '@prisma/client'
 
-export default function WordForm() {
-	const [word, setWord] = useState('')
-	const [meanings, setMeanings] = useState<string[]>([])
+export default function WordForm({ wordData }: { wordData?: Word }) {
+	let defaultValues
+	if (wordData) {
+		defaultValues = {
+			word: wordData.word,
+			meanings: wordData.meanings,
+			definitions: wordData.definitions,
+			examples: wordData.examples,
+			appearances: wordData.appearance,
+		}
+	} else {
+		defaultValues = {
+			word: '',
+			meanings: [],
+			definitions: [''],
+			examples: [''],
+			appearances: [''],
+		}
+	}
+	console.log(wordData)
+
+	const [word, setWord] = useState(defaultValues.word)
+	const [meanings, setMeanings] = useState<string[]>(defaultValues.meanings)
 	const [meaningInput, setMeaningInput] = useState('')
-	const [definitions, setDefinitions] = useState([''])
-	const [examples, setExamples] = useState([''])
-	const [appearances, setAppearances] = useState([''])
+	const [definitions, setDefinitions] = useState(defaultValues.definitions)
+	const [examples, setExamples] = useState(defaultValues.examples)
+	const [appearances, setAppearances] = useState(defaultValues.appearances)
 
 	const validationErrors = useActionData<typeof action>()
 
@@ -110,11 +131,11 @@ export default function WordForm() {
 			appearances.filter((val) => val.trim() !== '').join('//')
 		)
 
-		submit(formData, { method: 'POST' })
-		// submit(formData, {
-		// 	method: poem ? 'PUT' : 'POST',
-		// 	action: poem ? `/poem/${poem.id}` : `/poem/add`,
-		// })
+		// submit(formData, { method: 'POST' })
+		submit(formData, {
+			method: wordData ? 'PUT' : 'POST',
+			action: wordData ? `/dictionary/${wordData.id}` : `/dictionary/add`,
+		})
 	}
 
 	return (

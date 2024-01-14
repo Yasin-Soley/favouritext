@@ -85,3 +85,37 @@ export async function deleteWord(wordId: string) {
 	console.log('result', result)
 	return result
 }
+
+export async function updateWord(word: Word, wordId: string) {
+	const existingWord = await prisma.word.findUnique({
+		where: { id: wordId },
+	})
+
+	if (!existingWord) {
+		throw Error('واژۀ مورد نظر یافت نشد!')
+	}
+
+	const updatedWord = await prisma.word.update({
+		where: {
+			id: wordId,
+		},
+		data: {
+			user: {
+				connect: {
+					id: existingWord.userId,
+				},
+			},
+			word: word.word,
+			meanings: word.meanings,
+			definitions: word.definitions,
+			examples: word.examples,
+			appearance: word.appearances,
+		},
+	})
+
+	if (!updatedWord) {
+		throw new CustomError('عملیات با خطا مواجه شد. دوباره تلاش کنید.', 401)
+	}
+
+	return updatedWord
+}
