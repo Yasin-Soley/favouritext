@@ -1,5 +1,5 @@
 // import { useState } from 'react'
-import { Form, Outlet, useLoaderData } from '@remix-run/react'
+import { Form, Outlet, useLoaderData, useSearchParams } from '@remix-run/react'
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
 
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
@@ -24,7 +24,7 @@ export const meta: MetaFunction = () => {
 	]
 }
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
+export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 	const userId = await requireUserSession(request)
 
 	const username = await getUsernameById(userId)
@@ -49,25 +49,44 @@ export default function PoemPage() {
 
 	const [searchTerm, setSearchTerm] = useState('')
 
+	const [searchParams] = useSearchParams()
+	let params = searchParams.get('filters') || ''
+	const filters = params.split(',').filter((filter) => filter.trim() !== '')
+
 	const searchInputRef = useRef<HTMLInputElement>(null)
 
 	const filterPoems = () => {
-		if (!searchTerm.trim()) return poems
+		if (!searchTerm.trim() && filters.length === 0) return poems
 
 		const lowercasedSearchTerm = searchTerm.toLowerCase()
 
 		return poems.filter(
 			(poem) =>
-				poem.poet.toLowerCase().includes(lowercasedSearchTerm) ||
-				poem.alias.toLowerCase().includes(lowercasedSearchTerm) ||
-				poem.tags.some((tag) =>
-					tag.toLowerCase().includes(lowercasedSearchTerm)
-				) ||
-				poem.lines.some((line) =>
-					[line.p1, line.p2].some((text) =>
-						text.toLowerCase().includes(lowercasedSearchTerm)
-					)
-				)
+				(filters.length === 0 || // Check if filters array is empty
+					filters.some(
+						(item) =>
+							// Add your specific conditions for selected items
+							poem.poet.toLowerCase().includes(item) ||
+							poem.alias.toLowerCase().includes(item) ||
+							poem.tags.some((tag) =>
+								tag.toLowerCase().includes(item)
+							) ||
+							poem.lines.some((line) =>
+								[line.p1, line.p2].some((text) =>
+									text.toLowerCase().includes(item)
+								)
+							)
+					)) && // Add your existing search term conditions
+				(poem.poet.toLowerCase().includes(lowercasedSearchTerm) ||
+					poem.alias.toLowerCase().includes(lowercasedSearchTerm) ||
+					poem.tags.some((tag) =>
+						tag.toLowerCase().includes(lowercasedSearchTerm)
+					) ||
+					poem.lines.some((line) =>
+						[line.p1, line.p2].some((text) =>
+							text.toLowerCase().includes(lowercasedSearchTerm)
+						)
+					))
 		)
 	}
 

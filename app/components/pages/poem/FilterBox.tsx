@@ -1,33 +1,58 @@
-import { useState } from 'react'
+import { useSearchParams } from '@remix-run/react'
+import { useEffect, useState } from 'react'
 
 interface FilterProps {
-	type: 'poets' | 'tags'
 	heading: string
 	data: string[]
 	border?: boolean
 }
 
-export default function FilterBox({
-	type,
-	heading,
-	data,
-	border,
-}: FilterProps) {
-	const [showAllOptions, setShowAllOptions] = useState({
-		tags: false,
-		poets: false,
-	})
+export default function FilterBox({ heading, data, border }: FilterProps) {
+	const [showAllOptions, setShowAllOptions] = useState(false)
+	// const [selectedItems, setSelectedItems] = useState<string[]>([])
+	const [filterParams, setFilterParams] = useState<string[]>([])
 
-	if (!showAllOptions[type]) data = data.slice(0, 3)
+	const [searchParams, setSearchParams] = useSearchParams()
 
-	const handleMoreButtonClick = () => {
-		const newState = { ...showAllOptions }
-		newState[type] = !newState[type]
+	let params = searchParams.get('filters') || ''
+	useEffect(() => {
+		if (params !== '')
+			setFilterParams(params.split(',').filter((s) => s !== ''))
+	}, [params])
 
-		setShowAllOptions(newState)
+	console.log('f', filterParams)
+
+	const handleCheckboxChange = (
+		e: React.ChangeEvent<HTMLInputElement>,
+		item: string
+	) => {
+		const isChecked = e.target.checked
+		const selectedItems = searchParams.get('filters') || ''
+
+		const selectedItemsArray = selectedItems
+			.split(',')
+			.filter((s) => s !== '')
+
+		console.log(selectedItemsArray)
+
+		// Toggle the selection
+		if (isChecked) {
+			const updatedItems = [...selectedItemsArray, item]
+			console.log(updatedItems)
+
+			setSearchParams({ filters: updatedItems.join(',') })
+		} else {
+			const updatedItems = selectedItemsArray.filter(
+				(selectedItem) => selectedItem !== item
+			)
+			console.log(updatedItems)
+			setSearchParams({ filters: updatedItems.join(',') })
+		}
 	}
 
-	let btnText = showAllOptions[type] ? '- بستن' : '+ بیشتر'
+	if (!showAllOptions) data = data.slice(0, 3)
+
+	let btnText = showAllOptions ? '- بستن' : '+ بیشتر'
 
 	return (
 		<div className={`${border && 'border-b border-main'} py-5`}>
@@ -41,13 +66,19 @@ export default function FilterBox({
 				) : (
 					data.map((item, i) => (
 						<li key={i} className="flex gap-x-2">
-							<input type="checkbox" name={item} id={item} />
+							<input
+								type="checkbox"
+								name={item}
+								id={item}
+								checked={filterParams.includes(item)}
+								onChange={(e) => handleCheckboxChange(e, item)}
+							/>
 							<label htmlFor={item}>{item}</label>
 						</li>
 					))
 				)}
 				<button
-					onClick={handleMoreButtonClick}
+					onClick={() => setShowAllOptions((prevState) => !prevState)}
 					className="text-right text-xs mt-4"
 				>
 					{btnText}

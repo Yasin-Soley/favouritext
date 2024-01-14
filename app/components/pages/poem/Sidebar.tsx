@@ -1,9 +1,16 @@
 import type { loader } from '@/routes/_app.poem'
 import FilterBox from './FilterBox'
-import { useLoaderData } from '@remix-run/react'
+import { useLoaderData, useSearchParams } from '@remix-run/react'
 
 export default function Sidebar() {
 	const { username, tagsFilter, poetsFilter } = useLoaderData<typeof loader>()
+
+	const [searchParams, setSearchParams] = useSearchParams()
+
+	const handleRemoveFilters = () => {
+		searchParams.delete('filters') // delete foo on searchParams object
+		setSearchParams(searchParams) // reset URL searchParams to object with foo removed
+	}
 
 	return (
 		<>
@@ -17,23 +24,21 @@ export default function Sidebar() {
 				<div className="bg-green_dark text-primary px-5 py-4 flex justify-between">
 					<h4 className="text-lg">فیلتر ها</h4>
 
-					<button className="text-xs border-b border-inherit">
+					<button
+						onClick={handleRemoveFilters}
+						className="text-xs border-b border-inherit"
+					>
 						حذف فیلتر ها
 					</button>
 				</div>
 
 				<div className="text-green_dark bg-green_light px-5">
 					<FilterBox
-						type="poets"
 						heading="بر اساس شاعر"
 						data={poetsFilter}
 						border
 					/>
-					<FilterBox
-						type="tags"
-						heading="بر اساس موضوع"
-						data={tagsFilter}
-					/>
+					<FilterBox heading="بر اساس موضوع" data={tagsFilter} />
 				</div>
 			</div>
 		</>

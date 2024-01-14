@@ -21,6 +21,7 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/react-paginate": "^7.1.4",
     "bcryptjs": "^2.4.3",
+    "framer-motion": "^10.18.0",
     "isbot": "^3.6.8",
     "prisma": "latest",
     "react": "^18.2.0",
