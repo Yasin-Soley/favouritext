@@ -9,9 +9,9 @@ export default function MainNavigation() {
 	return (
 		<nav className="px-14 pt-5">
 			<div className="flex">
-				<div className="px-8 py-1 text-xl font-bold tracking-widest">
+				<div className="px-8 py-1 text-xl font-bold">
 					<Link className="text-primary" to="/">
-						LOGO
+						فکرنویس
 					</Link>
 				</div>
 

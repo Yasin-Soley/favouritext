@@ -15,7 +15,7 @@ import { useRef, useState } from 'react'
 
 export const meta: MetaFunction = () => {
 	return [
-		{ title: 'LOGO - Poem' },
+		{ title: 'فکرنویس - اشعار' },
 		{
 			name: 'description',
 			content:

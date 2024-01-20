@@ -12,14 +12,7 @@ import PoemForm from '@/components/pages/poem/PoemForm'
 import { addPoem } from '@/data/poem.server'
 
 export const meta: MetaFunction = () => {
-	return [
-		{ title: 'LOGO - Adding poem' },
-		{
-			name: 'description',
-			content:
-				'This is where I store the words that are new, interesting or valuable to me.',
-		},
-	]
+	return [{ title: 'فکرنویس - افزودن شعر' }]
 }
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {

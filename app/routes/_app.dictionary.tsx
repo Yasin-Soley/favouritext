@@ -3,7 +3,7 @@ import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
 import { getUsernameById, requireUserSession } from '@/data/auth.server'
 
 import Sidebar from '@/components/pages/dictionary/Sidebar'
-import { Form, Outlet, useLoaderData } from '@remix-run/react'
+import { Form, Outlet, useLoaderData, useSearchParams } from '@remix-run/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import WordBox from '@/components/pages/dictionary/WordBox'
 import FAB from '@/components/common/FAB'
@@ -39,8 +39,14 @@ export default function Dictionary() {
 
 	const searchInputRef = useRef<HTMLInputElement>(null)
 
+	const [searchParams] = useSearchParams()
+	let filter = searchParams.get('term') || ''
+
 	const filterWords = () => {
-		if (!searchTerm.trim()) return words
+		if (!searchTerm.trim() && filter === '') return words
+
+		if (filter !== '')
+			return words.filter((word) => word.word.startsWith(filter))
 
 		const lowercasedSearchTerm = searchTerm.toLowerCase()
 

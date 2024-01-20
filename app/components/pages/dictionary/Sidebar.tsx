@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from '@remix-run/react'
+import { Link, useLoaderData, useSearchParams } from '@remix-run/react'
 
 import type { loader } from '@/routes/_app.poem'
 
@@ -6,6 +6,12 @@ import { alphabets } from '@/utils'
 
 export default function Sidebar() {
 	const { username } = useLoaderData<typeof loader>()
+
+	const [searchParams, setSearchParams] = useSearchParams()
+	const handleRemoveFilters = () => {
+		searchParams.delete('term') // delete foo on searchParams object
+		setSearchParams(searchParams) // reset URL searchParams to object with foo removed
+	}
 
 	return (
 		<>
@@ -19,7 +25,10 @@ export default function Sidebar() {
 				<div className="bg-green_dark text-primary px-5 py-4 flex justify-between">
 					<h4 className="text-lg">حروف الفبا</h4>
 
-					<button className="text-xs border-b border-inherit">
+					<button
+						className="text-xs border-b border-inherit"
+						onClick={handleRemoveFilters}
+					>
 						حذف فیلتر ها
 					</button>
 				</div>

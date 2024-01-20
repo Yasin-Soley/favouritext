@@ -5,10 +5,15 @@ import {
 	type ActionFunctionArgs,
 	type LoaderFunctionArgs,
 	redirect,
+	type MetaFunction,
 } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { getPoemById, updatePoem } from '@/data/poem.server'
 import { validatePoemData, type PoemError } from '@/data/validate.server'
+
+export const meta: MetaFunction = () => {
+	return [{ title: 'فکر نویس - ویرایش شعر' }]
+}
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 	await requireUserSession(request)

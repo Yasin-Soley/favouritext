@@ -3,6 +3,7 @@ import {
 	type ActionFunctionArgs,
 	type LoaderFunctionArgs,
 	redirect,
+	type MetaFunction,
 } from '@remix-run/node'
 import { useLoaderData, useMatches } from '@remix-run/react'
 
@@ -25,6 +26,10 @@ export interface ParentRouteData {
 	}[]
 	tagsFilter: string[]
 	poetsFilter: string[]
+}
+
+export const meta: MetaFunction = () => {
+	return [{ title: 'فکر نویس - حذف شعر' }]
 }
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
