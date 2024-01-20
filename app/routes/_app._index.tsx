@@ -48,7 +48,10 @@ export default function Index() {
 				</div>
 			</section>
 
-			<section className="flex rounded-sm overflow-hidden h-80 my-10">
+			<section
+				id="content"
+				className="flex rounded-sm overflow-hidden h-80 my-10"
+			>
 				<div className="w-1/4 bg-landingPoem bg-cover bg-center bg-no-repeat"></div>
 				<div className="flex-1 flex flex-col justify-center">
 					<div className="bg-cWhite h-2/3 text-center py-5">
