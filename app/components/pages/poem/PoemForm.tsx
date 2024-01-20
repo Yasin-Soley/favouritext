@@ -1,9 +1,16 @@
 import { useRef, useState, type FormEvent } from 'react'
-import { Form, Link, useActionData, useSubmit } from '@remix-run/react'
+import {
+	Form,
+	Link,
+	useActionData,
+	useNavigation,
+	useSubmit,
+} from '@remix-run/react'
 
 import { PlusIcon, XCircleIcon } from '@heroicons/react/24/solid'
 import type { PoemLine } from '@/data/validate.server'
 import type { action } from '@/routes/_app.poem_.add'
+import Button from '@/components/common/Button'
 
 interface PoemFormProps {
 	poem?: {
@@ -48,6 +55,8 @@ export default function PoemForm({ poem }: PoemFormProps) {
 
 	const validationErrors = useActionData<typeof action>()
 	const submit = useSubmit()
+
+	const navigation = useNavigation()
 
 	const handlePoetChange = (poet: string) => {
 		setPoet(poet)
@@ -303,12 +312,14 @@ export default function PoemForm({ poem }: PoemFormProps) {
 					)}
 
 					<div className="mt-10 flex flex-col gap-y-3 items-center">
-						<button
+						<Button
+							isButton
 							type="submit"
 							className="bg-green_dark text-primary w-44 py-2 rounded-sm"
+							isLoading={navigation.state !== 'idle'}
 						>
 							تایید
-						</button>
+						</Button>
 						<Link
 							className="text-xs pb-1 border-b border-green_dark"
 							to={`/poem`}

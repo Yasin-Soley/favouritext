@@ -1,4 +1,10 @@
-import { Form, Link, useActionData, useSubmit } from '@remix-run/react'
+import {
+	Form,
+	Link,
+	useActionData,
+	useNavigation,
+	useSubmit,
+} from '@remix-run/react'
 import { useRef, useState, type FormEvent } from 'react'
 
 import {
@@ -8,6 +14,7 @@ import {
 } from '@heroicons/react/24/solid'
 import type { action } from '@/routes/_app.dictionary_.add'
 import type { Word } from '@prisma/client'
+import Button from '@/components/common/Button'
 
 export default function WordForm({ wordData }: { wordData?: Word }) {
 	let defaultValues
@@ -28,7 +35,6 @@ export default function WordForm({ wordData }: { wordData?: Word }) {
 			appearances: [''],
 		}
 	}
-	console.log(wordData)
 
 	const [word, setWord] = useState(defaultValues.word)
 	const [meanings, setMeanings] = useState<string[]>(defaultValues.meanings)
@@ -41,6 +47,8 @@ export default function WordForm({ wordData }: { wordData?: Word }) {
 
 	const meanInputRef = useRef<HTMLInputElement>(null)
 	const submit = useSubmit()
+
+	const navigation = useNavigation()
 
 	const handleWordChange = (word: string) => setWord(word)
 
@@ -349,12 +357,14 @@ export default function WordForm({ wordData }: { wordData?: Word }) {
 					)}
 
 					<div className="mt-10 flex flex-col gap-y-3 items-center">
-						<button
+						<Button
+							isButton
+							isLoading={navigation.state !== 'idle'}
 							type="submit"
 							className="bg-green_dark text-primary w-44 py-2 rounded-sm"
 						>
 							تایید
-						</button>
+						</Button>
 						<Link
 							className="text-xs pb-1 border-b border-green_dark"
 							to={`/dictionary`}
