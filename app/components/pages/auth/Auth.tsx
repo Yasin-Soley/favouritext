@@ -25,7 +25,7 @@ const Auth = ({ mode }: { mode: string }) => {
 					mode === 'login' ? 'bg-login' : 'bg-register'
 				} bg-cover bg-center w-1/3 h-screen`}
 			>
-				<div className="p-10 text-xl font-bold tracking-widest">
+				<div className="p-10 text-2xl font-bold">
 					<Link className="text-primary" to="/">
 						فکرنویس
 					</Link>
