@@ -27,7 +27,7 @@ const Auth = ({ mode }: { mode: string }) => {
 			>
 				<div className="p-10 text-xl font-bold tracking-widest">
 					<Link className="text-primary" to="/">
-						LOGO
+						فکرنویس
 					</Link>
 				</div>
 			</div>
