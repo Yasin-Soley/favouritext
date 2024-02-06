@@ -43,7 +43,7 @@ export default function App() {
 			<body
 				dir="rtl"
 				className="bg-main text-green_dark relative"
-				style={{}}
+				style={{ fontFamily: 'B Roya' }}
 				id="root"
 			>
 				<Outlet />

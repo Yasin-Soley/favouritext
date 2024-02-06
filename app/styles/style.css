@@ -16,9 +16,9 @@
 @font-face {
 	font-family: 'B Roya';
 	src: local('B Roya Bold'), local('BRoya-Bold'),
-		url('/public/assets/font/BRoyaBold.woff2') format('woff2'),
-		url('/public/assets/font/BRoyaBold.woff') format('woff'),
-		url('/public/assets/font/BRoyaBold.ttf') format('truetype');
+		url('/assets/font/BRoyaBold.woff2') format('woff2'),
+		url('/assets/font/BRoyaBold.woff') format('woff'),
+		url('/assets/font/BRoyaBold.ttf') format('truetype');
 	font-weight: 700;
 	font-stretch: normal;
 	/*font-style: normal;*/
